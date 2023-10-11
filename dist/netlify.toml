@@ -1,0 +1,39 @@
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/admin"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]  
+  from = "/admin/add-product"
+  to = "/index.html"
+  status = 200
+  
+[[redirects]]
+  from = "/admin/add-category"
+  to = "/index.html"
+  status = 200
+  
+[[redirects]]
+  from = "/admin/product-list"
+  to = "/index.html"
+  status = 200
+  
+[[redirects]]
+  from = "/admin/edit-product/:id"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/login"
+  to = "/index.html"
+  status = 200
+  
+[[redirects]]
+  from = "/signup"
+  to = "/index.html"
+  status = 200
