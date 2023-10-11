@@ -1,0 +1,58 @@
+<div class="container mt-5">
+	<div
+		class="col-6 bg-white mx-auto rounded px-3 py-4"
+	>
+		<form
+			[formGroup]="categoryForm"
+			(ngSubmit)="formHandler()"
+		>
+			<div class="col-12">
+				<label
+					for="category"
+					class="form-label"
+					>Category</label
+				>
+				<input
+					type="text"
+					formControlName="category"
+					class="form-control"
+					id="category"
+				/>
+				<span
+					class="small text-danger"
+					*ngIf="
+						!categoryForm.get('category').valid &&
+						categoryForm.get('category').touched
+					"
+				>
+					<span
+						class="small text-danger"
+						*ngIf="
+							categoryForm.get('category').errors[
+								'required'
+							]
+						"
+					>
+						category is required
+					</span>
+					<span
+						class="small text-danger"
+						*ngIf="
+							categoryForm.get('category').errors[
+								'minlength'
+							]
+						"
+					>
+						Category should be of minimum 3 chars.
+					</span>
+				</span>
+			</div>
+			<button
+				class="btn btn-primary my-3"
+				[disabled]="!categoryForm.valid"
+			>
+				Add
+			</button>
+		</form>
+	</div>
+</div>
