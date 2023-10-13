@@ -1,144 +1,209 @@
 import {
-	Component,
-	OnInit,
-} from "@angular/core";
-import { AdminServiceService } from "../admin-service.service";
-import {
-	ImageCroppedEvent,
-	LoadedImage,
-} from "ngx-image-cropper";
-import { DomSanitizer } from "@angular/platform-browser";
-import {
-	FormGroup,
-	Validators,
-	FormControl,
-} from "@angular/forms";
-import { DataService } from "../data.service";
-// import "firebase/storage";
-import { HttpClient } from "@angular/common/http";
-import { initializeApp } from "firebase/app";
-import {
-	getDownloadURL,
-	getStorage,
-	ref,
-	uploadBytes,
-} from "firebase/storage";
-import { environment } from "../../../enviroments/enviroments";
-
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+  ViewChild,
+  ViewEncapsulation,
+} from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { CropperComponent } from 'angular-cropperjs';
+import Cropper from 'cropperjs';
+import { initializeApp } from 'firebase/app';
+import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage';
+import { SuperImageCropper } from 'super-image-cropper';
+import { environment } from '../../../enviroments/enviroments';
+import { AdminServiceService } from '../admin-service.service';
+import { DataService } from '../data.service';
+export interface ImageCropperSetting {
+  width: number;
+  height: number;
+}
+export interface ImageCropperResult {
+  imageData: Cropper.ImageData;
+  cropData: Cropper.CropBoxData;
+  blob?: Blob;
+  dataUrl?: string;
+}
 @Component({
-	selector: "app-add-product",
-	templateUrl: "./add-product.component.html",
-	styleUrls: ["./add-product.component.scss"],
+  selector: 'app-add-product',
+  templateUrl: './add-product.component.html',
+  styleUrls: ['./add-product.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
-export class AddProductComponent
-	implements OnInit
-{
-	firebaseApp = initializeApp(
-		environment.firebaseConfig
-	);
+export class AddProductComponent implements OnInit, OnDestroy {
+  constructor(
+    private data: DataService,
+    private prodService: AdminServiceService
+  ) {}
+  @ViewChild('angularCropper') public angularCropper: CropperComponent;
+  @ViewChild('image', { static: true }) image: ElementRef;
 
-	// Get a reference to the storage service, which is used to create references in your storage bucket
-	storage = getStorage(this.firebaseApp);
-	constructor(
-		private sanitizer: DomSanitizer,
-		private data: DataService,
-		private prodService: AdminServiceService,
-		private http: HttpClient // private afStorage:AngularFireStorage
-	) {}
-	imageChangedEvent: any = "";
-	croppedImage: any = "";
-	productForm: FormGroup;
-	numRegex = /\d+$/;
-	file: any;
-	base64;
-	fileChangeEvent(event: any): void {
-		this.imageChangedEvent = event;
-		this.croppedImage = event.target.files[0];
-	}
-	imageCropped(event: ImageCroppedEvent) {
-		if (event.objectUrl) {
-			this.croppedImage = event.objectUrl;
-			console.log(event);
+  @Input() imageUrl: any;
+  @Input() settings: ImageCropperSetting;
+  @Input() cropbox: Cropper.CropBoxData;
+  @Input() loadImageErrorText: string;
+  @Input() cropperOptions: any = {};
 
-			fetch(event.objectUrl)
-				.then((res) => res.blob())
-				.then((blob) => {
-					const file = new File([blob], "png", {
-						type: blob.type,
-					});
-					// console.log(file);
+  @Output() export = new EventEmitter<ImageCropperResult>();
+  @Output() ready = new EventEmitter();
 
-					const fr = new FileReader();
-					fr.readAsDataURL(file);
-					fr.addEventListener("load", () => {
-						const res = fr.result;
-						console.log(res);
-						this.base64 = file;
-					});
-				});
-		}
-	}
-	imageLoaded(image: LoadedImage) {
-		// show cropper
-	}
-	cropperReady() {
-		// cropper ready
-	}
-	loadImageFailed() {
-		// show message
-	}
-	ngOnInit(): void {
-		this.productForm = new FormGroup({
-			title: new FormControl(
-				"",
-				Validators.required
-			),
-			category: new FormControl(
-				"",
-				Validators.required
-			),
-			image:new FormControl(null,Validators.required),
-			price: new FormControl(null, [
-				Validators.required,
-				Validators.pattern(this.numRegex),
-			]),
-			stock: new FormControl(null, [
-				Validators.required,
-				Validators.pattern(this.numRegex),
-			]),
-		});
-		this.data
-			.getCategories()
-			.subscribe((res: any) => {
-				this.list = Object.values(res);
-			});
-	}
-	list = [];
+  public isLoading: boolean = true;
+  public cropper: Cropper;
+  public imageElement: HTMLImageElement;
+  public loadError: any;
 
-	formHandler() {
-		let formValue = this.productForm.value;
-		let img: string[] = [];
+  imageChangedEvent: any = '';
+  croppedImage: any = '';
+  productForm: FormGroup;
+  numRegex = /\d+$/;
+  file: any;
+  base64;
+  targetUrl = '';
+  firebaseApp = initializeApp(environment.firebaseConfig);
+  isGif = false;
+  @ViewChild('cropperJsRoot') cropperJsRoot: ElementRef;
 
-		const refStorage = ref(
-			this.storage,
-			`images/${formValue.title}`
-		);
+  cropperInstance: Cropper;
+  targetGif: string;
+  superImageCropperInstance: SuperImageCropper;
+  croppedImageList: string[] = [];
 
-		uploadBytes(refStorage, this.base64)
-			.then((snapshot) => {
-				console.log("Uploaded a blob or file!");
-				return getDownloadURL(snapshot.ref);
-			})
-			.then((downloadURL) => {
-				console.log(downloadURL);
-				img.push(downloadURL);
-			})
-			.then(() => {
-				let prodObj = {
-					...formValue,
-					images: img,
-				};
-				this.prodService.uploadProduct(prodObj);
-			});
-	}
+  ngOnInit(): void {
+    this.productForm = new FormGroup({
+      title: new FormControl('', Validators.required),
+      category: new FormControl('', Validators.required),
+      price: new FormControl(null, [
+        Validators.required,
+        Validators.pattern(this.numRegex),
+      ]),
+      stock: new FormControl(null, [
+        Validators.required,
+        Validators.pattern(this.numRegex),
+      ]),
+    });
+    this.data.getCategories().subscribe((res: any) => {
+      this.list = Object.values(res);
+    });
+  }
+
+  list = [];
+
+  onGifUpload(event: any): void {
+    this.croppedImage = '';
+    this.targetGif = '';
+    const file = event.target.files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      this.targetGif = reader.result as string;
+    };
+  }
+
+  storage = getStorage(this.firebaseApp);
+
+  ngOnDestroy() {
+    if (this.cropper) {
+      this.cropper.destroy();
+      this.cropper = null;
+    }
+  }
+
+  imageLoadedS(ev: Event) {
+    this.loadError = false;
+
+    const image = ev.target as HTMLImageElement;
+    this.imageElement = image;
+
+    if (this.cropperOptions.checkCrossOrigin) image.crossOrigin = 'anonymous';
+
+    image.addEventListener('ready', () => {
+      this.ready.emit(true);
+
+      this.isLoading = false;
+
+      if (this.cropbox) {
+        this.cropper.setCropBoxData(this.cropbox);
+      }
+    });
+
+    let aspectRatio = NaN;
+    if (this.settings) {
+      const { width, height } = this.settings;
+      aspectRatio = width / height;
+    }
+
+    this.cropperOptions = {
+      ...{
+        aspectRatio,
+        checkCrossOrigin: true,
+      },
+      ...this.cropperOptions,
+    };
+
+    if (this.cropper) {
+      this.cropper.destroy();
+      this.cropper = undefined;
+    }
+
+    this.cropper = new Cropper(image, this.cropperOptions);
+  }
+
+  imageLoadError(event: any) {
+    this.loadError = true;
+    this.isLoading = false;
+  }
+
+  exportCanvas(base64?: any) {
+    const imageData = this.cropper.getImageData();
+    const cropData = this.cropper.getCropBoxData();
+    const canvas = this.cropper.getCroppedCanvas();
+    const data = { imageData, cropData };
+
+    const promise = new Promise((resolve) => {
+      canvas.toBlob((blob) => {
+        const file = new File([blob], 'png', {
+          type: blob.type,
+        });
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const base64data = reader.result;
+          this.croppedImage = base64data;
+          this.base64 = file;
+        };
+        reader.onerror = () => {};
+        reader.readAsDataURL(file);
+      });
+    });
+
+    promise.then((res: any) => {
+      this.export.emit({ ...data, ...res });
+    });
+  }
+
+  formHandler() {
+    let formValue = this.productForm.value;
+    let img: string[] = [];
+
+    const refStorage = ref(this.storage, `images/${formValue.title}`);
+
+    uploadBytes(refStorage, this.base64)
+      .then((snapshot) => {
+        return getDownloadURL(snapshot.ref);
+      })
+      .then((downloadURL) => {
+        img.push(downloadURL);
+      })
+      .then(() => {
+        let prodObj = {
+          ...formValue,
+          images: img,
+        };
+
+        this.prodService.uploadProduct(prodObj);
+      });
+  }
 }

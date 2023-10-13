@@ -49,16 +49,13 @@ export class EditProductComponent
 					stock: res[0].stock,
 				});
 			});
+			this.data.getCategories().subscribe((res: any) => {
+				this.list = Object.values(res);
+			  });
 	}
 
 
-	list = [
-		"smartphones",
-		"skincare",
-		"fragrances",
-		"laptops",
-		"groceries",
-	];
+	list = []
 
 	formHandler() {
 		let formValue = this.productForm.value;
