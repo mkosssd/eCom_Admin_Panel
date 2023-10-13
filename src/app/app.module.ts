@@ -10,7 +10,8 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatTableModule } from '@angular/material/table';
 import { BrowserModule } from '@angular/platform-browser';
-import { AngularCropperjsModule } from 'angular-cropperjs';
+import { UploadWidgetModule } from '@bytescale/upload-widget-angular';
+import { CloudinaryModule } from '@cloudinary/ng';
 import { ImageCropperModule } from 'ngx-image-cropper';
 import { environment } from '../enviroments/enviroments';
 import { AddCategoryComponent } from './admin-panel/add-category/add-category.component';
@@ -24,6 +25,7 @@ import { LoginComponent } from './auth/login/login.component';
 import { SignUpComponent } from './auth/sign-up/sign-up.component';
 import { HeaderComponent } from './header/header.component';
 import { LoaderComponent } from './loader/loader.component';
+import { AngularCropperjsModule } from 'angular-cropperjs';
 @NgModule({
   declarations: [
     AppComponent,
@@ -38,6 +40,7 @@ import { LoaderComponent } from './loader/loader.component';
     HeaderComponent,
   ],
   imports: [
+    CloudinaryModule,
     BrowserModule,
     AngularFireStorageModule,
     AppRoutingModule,
@@ -51,6 +54,8 @@ import { LoaderComponent } from './loader/loader.component';
     MatSliderModule,
     AngularFireModule,
     ReactiveFormsModule,
+    ImageCropperModule,
+    UploadWidgetModule,
     provideFirestore(() => getFirestore()),
     AngularFireModule.initializeApp(environment.firebaseConfig),
     provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
