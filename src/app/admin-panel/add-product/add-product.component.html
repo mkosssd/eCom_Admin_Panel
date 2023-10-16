@@ -1,5 +1,8 @@
 <div class="container">
-  <div class="col-6 bg-white mx-auto rounded px-3 py-4">
+  <div>
+    <app-loader *ngIf="isLoading"></app-loader>
+  </div>
+  <div class="col-6 bg-white mx-auto rounded px-3 py-4" *ngIf="!isLoading">
     <form [formGroup]="productForm" (ngSubmit)="formHandler()">
       <div class="col-12">
         <label for="title" class="form-label">Title</label>
@@ -52,39 +55,16 @@
         </span>
       </div>
 
-      <div class="cropper-wrapper">
-        <label for="image" class="form-label">Image</label>
-        <input
-        type="file"
-        (change)="onGifUpload($event)"
-        class="form-control"
-        accept="image/png,image/jpeg,image/webp"
-        />
-        <!-- LOADING -->
-        <div class="loading-block" *ngIf="isLoading && targetGif">
-          <div class="spinner"></div>
-        </div>
 
-        <!-- LOAD ERROR -->
-        <div class="alert alert-warning" *ngIf="loadError">
-          {{ loadImageErrorText }}
-        </div>
-        
-        <!-- CROPPER -->
-        <div class="cropper" *ngIf="targetGif">
-          <img
-          #image
-          alt="image"
-          [src]="targetGif"
-            (load)="imageLoadedS($event)"
-            (error)="imageLoadError($event)"
-          />
-        </div>
-        <button (click)="exportCanvas()" type="button" class="btn btn-outline-primary btn-sm my-2" *ngIf="targetGif">Crop</button>
-         <br>
-         <span class="small text-danger" *ngIf="targetGif && !croppedImage"> Please crop the image before uploading.</span>
-        <img [src]="croppedImage" alt="croppedImage" *ngIf="croppedImage" width="250px">
-      </div>
+
+
+      <app-angular-cropper
+        [imageUrl]="targetImg"
+        (base64)="angularCropperHandler($event)"
+      ></app-angular-cropper>
+
+
+
 
       <div class="col-12">
         <label for="price" class="form-label">Price</label>
@@ -145,7 +125,10 @@
       </div>
 
       <div class="col my-2"></div>
-      <button class="btn btn-success" [disabled]="!productForm.valid || !croppedImage">
+      <button
+        class="btn btn-success"
+        [disabled]="!productForm.valid || !base64"
+      >
         Add
       </button>
     </form>

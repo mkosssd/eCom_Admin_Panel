@@ -3,7 +3,6 @@ import {
   ElementRef,
   EventEmitter,
   Input,
-  OnDestroy,
   OnInit,
   Output,
   ViewChild,
@@ -34,43 +33,24 @@ export interface ImageCropperResult {
   styleUrls: ['./add-product.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class AddProductComponent implements OnInit, OnDestroy {
+export class AddProductComponent implements OnInit {
   constructor(
     private data: DataService,
     private prodService: AdminServiceService
   ) {}
-  @ViewChild('angularCropper') public angularCropper: CropperComponent;
-  @ViewChild('image', { static: true }) image: ElementRef;
 
-  @Input() imageUrl: any;
-  @Input() settings: ImageCropperSetting;
-  @Input() cropbox: Cropper.CropBoxData;
-  @Input() loadImageErrorText: string;
-  @Input() cropperOptions: any = {};
+  isLoading = false;
 
-  @Output() export = new EventEmitter<ImageCropperResult>();
-  @Output() ready = new EventEmitter();
+  firebaseApp = initializeApp(environment.firebaseConfig);
+  list = [];
+  storage = getStorage(this.firebaseApp);
 
-  public isLoading: boolean = true;
-  public cropper: Cropper;
-  public imageElement: HTMLImageElement;
-  public loadError: any;
-
-  imageChangedEvent: any = '';
-  croppedImage: any = '';
   productForm: FormGroup;
   numRegex = /\d+$/;
-  file: any;
   base64;
   targetUrl = '';
-  firebaseApp = initializeApp(environment.firebaseConfig);
-  isGif = false;
-  @ViewChild('cropperJsRoot') cropperJsRoot: ElementRef;
 
-  cropperInstance: Cropper;
-  targetGif: string;
-  superImageCropperInstance: SuperImageCropper;
-  croppedImageList: string[] = [];
+  targetImg: string;
 
   ngOnInit(): void {
     this.productForm = new FormGroup({
@@ -89,102 +69,11 @@ export class AddProductComponent implements OnInit, OnDestroy {
       this.list = Object.values(res);
     });
   }
-
-  list = [];
-
-  onGifUpload(event: any): void {
-    this.croppedImage = '';
-    this.targetGif = '';
-    const file = event.target.files[0];
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => {
-      this.targetGif = reader.result as string;
-    };
+  angularCropperHandler(event: Event) {
+    this.base64 = event;
   }
-
-  storage = getStorage(this.firebaseApp);
-
-  ngOnDestroy() {
-    if (this.cropper) {
-      this.cropper.destroy();
-      this.cropper = null;
-    }
-  }
-
-  imageLoadedS(ev: Event) {
-    this.loadError = false;
-
-    const image = ev.target as HTMLImageElement;
-    this.imageElement = image;
-
-    if (this.cropperOptions.checkCrossOrigin) image.crossOrigin = 'anonymous';
-
-    image.addEventListener('ready', () => {
-      this.ready.emit(true);
-
-      this.isLoading = false;
-
-      if (this.cropbox) {
-        this.cropper.setCropBoxData(this.cropbox);
-      }
-    });
-
-    let aspectRatio = NaN;
-    if (this.settings) {
-      const { width, height } = this.settings;
-      aspectRatio = width / height;
-    }
-
-    this.cropperOptions = {
-      ...{
-        aspectRatio,
-        checkCrossOrigin: true,
-      },
-      ...this.cropperOptions,
-    };
-
-    if (this.cropper) {
-      this.cropper.destroy();
-      this.cropper = undefined;
-    }
-
-    this.cropper = new Cropper(image, this.cropperOptions);
-  }
-
-  imageLoadError(event: any) {
-    this.loadError = true;
-    this.isLoading = false;
-  }
-
-  exportCanvas(base64?: any) {
-    const imageData = this.cropper.getImageData();
-    const cropData = this.cropper.getCropBoxData();
-    const canvas = this.cropper.getCroppedCanvas();
-    const data = { imageData, cropData };
-
-    const promise = new Promise((resolve) => {
-      canvas.toBlob((blob) => {
-        const file = new File([blob], 'png', {
-          type: blob.type,
-        });
-        const reader = new FileReader();
-        reader.onload = (e) => {
-          const base64data = reader.result;
-          this.croppedImage = base64data;
-          this.base64 = file;
-        };
-        reader.onerror = () => {};
-        reader.readAsDataURL(file);
-      });
-    });
-
-    promise.then((res: any) => {
-      this.export.emit({ ...data, ...res });
-    });
-  }
-
   formHandler() {
+    this.isLoading = true;
     let formValue = this.productForm.value;
     let img: string[] = [];
 
@@ -204,6 +93,9 @@ export class AddProductComponent implements OnInit, OnDestroy {
         };
 
         this.prodService.uploadProduct(prodObj);
+      })
+      .then(() => {
+        this.isLoading = false;
       });
   }
 }

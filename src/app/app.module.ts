@@ -26,6 +26,7 @@ import { SignUpComponent } from './auth/sign-up/sign-up.component';
 import { HeaderComponent } from './header/header.component';
 import { LoaderComponent } from './loader/loader.component';
 import { AngularCropperjsModule } from 'angular-cropperjs';
+import { AngularCropperComponent } from './angular-cropper/angular-cropper.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -38,6 +39,7 @@ import { AngularCropperjsModule } from 'angular-cropperjs';
     AddCategoryComponent,
     EditProductComponent,
     HeaderComponent,
+    AngularCropperComponent,
   ],
   imports: [
     CloudinaryModule,

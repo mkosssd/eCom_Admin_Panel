@@ -127,6 +127,9 @@ export class AuthService {
     );
 
     if (loadedUser.token) {
+      
+      const expDuration = new Date(loggedUserData._tokenExpirationDate).getTime()-new Date().getTime()
+      this.autoLogout(expDuration)
       this.user.next(loadedUser);
     }
   }

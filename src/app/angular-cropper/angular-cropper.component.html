@@ -1,0 +1,44 @@
+<div class="cropper-wrapper">
+  <label for="image" class="form-label">Image</label>
+  <input
+    type="file"
+    (change)="onImageUpload($event)"
+    class="form-control"
+    accept="image/png,image/jpeg,image/webp"
+  />
+  
+
+  <!-- LOAD ERROR -->
+  <div class="alert alert-warning" *ngIf="loadError">
+    {{ loadImageErrorText }}
+  </div>
+
+  <!-- CROPPER -->
+  <div class="cropper" *ngIf="targetImg">
+    <img
+      #image
+      alt="image"
+      [src]="targetImg"
+      (load)="imageLoadedS($event)"
+      (error)="imageLoadError($event)"
+    />
+  </div>
+  <button
+    (click)="exportCanvas()"
+    type="button"
+    class="btn btn-outline-primary btn-sm my-2"
+    *ngIf="targetImg"
+  >
+    Crop
+  </button>
+  <br />
+  <span class="small text-danger" *ngIf="targetImg && !croppedImage">
+    Please crop the image before uploading.</span
+  >
+  <img
+    [src]="croppedImage"
+    alt="croppedImage"
+    *ngIf="croppedImage"
+    width="250px"
+  />
+</div>
