@@ -53,11 +53,11 @@
         [imageUrl]="targetImg"
         (base64)="angularCropperHandler($event)"
       ></app-angular-cropper>
-      
+
       <div class="col-12">
         <label for="price" class="form-label">Price</label>
         <input
-          type="text"
+          type="number"
           formControlName="price"
           class="form-control"
           id="price"
@@ -86,7 +86,7 @@
       <div class="col-12">
         <label for="stock" class="form-label">Stock</label>
         <input
-          type="text"
+          type="number"
           formControlName="stock"
           class="form-control"
           id="stock"
@@ -113,7 +113,10 @@
       </div>
 
       <div class="col my-2"></div>
-      <button class="btn btn-success" [disabled]="!productForm.valid || !base64">
+      <button
+        class="btn btn-success"
+        [disabled]="!productForm.valid || !base64"
+      >
         Edit
       </button>
     </form>

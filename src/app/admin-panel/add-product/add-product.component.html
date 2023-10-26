@@ -55,21 +55,15 @@
         </span>
       </div>
 
-
-
-
       <app-angular-cropper
         [imageUrl]="targetImg"
         (base64)="angularCropperHandler($event)"
       ></app-angular-cropper>
 
-
-
-
       <div class="col-12">
         <label for="price" class="form-label">Price</label>
         <input
-          type="text"
+          type="number"
           formControlName="price"
           class="form-control"
           id="price"
@@ -98,7 +92,7 @@
       <div class="col-12">
         <label for="stock" class="form-label">Stock</label>
         <input
-          type="text"
+          type="number"
           formControlName="stock"
           class="form-control"
           id="stock"

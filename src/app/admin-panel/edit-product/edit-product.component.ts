@@ -74,8 +74,8 @@ export class EditProductComponent implements OnInit {
       this.productForm.patchValue({
         title: res[0].title,
         category: res[0].category,
-        price: res[0].price,
-        stock: res[0].stock,
+        price: +res[0].price,
+        stock: +res[0].stock,
       });
     });
     this.data.getCategories().subscribe((res: any) => {
