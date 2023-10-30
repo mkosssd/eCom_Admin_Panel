@@ -99,11 +99,11 @@ export class AuthService {
   logout() {
     localStorage.removeItem('loggedData');
     this.user.next(null);
-    this.router.navigate(['/login']);
+    this.router.navigate(['/login'])
     if (this.tokenExpirationTimer) {
       clearTimeout(this.tokenExpirationTimer);
     }
-    this.tokenExpirationTimer = null;
+    // this.tokenExpirationTimer = null;
   }
   private tokenExpirationTimer: any;
   autoLogin() {
@@ -127,9 +127,10 @@ export class AuthService {
     );
 
     if (loadedUser.token) {
-      
-      const expDuration = new Date(loggedUserData._tokenExpirationDate).getTime()-new Date().getTime()
-      this.autoLogout(expDuration)
+      const expDuration =
+        new Date(loggedUserData._tokenExpirationDate).getTime() -
+        new Date().getTime();
+      this.autoLogout(expDuration);
       this.user.next(loadedUser);
     }
   }

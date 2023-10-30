@@ -12,9 +12,11 @@ export class ProductListComponent implements OnInit {
   productsList: Product[];
   constructor(private data: DataService, private router: Router) {}
   ngOnInit(): void {
-    this.data
-      .getProducts()
-      .subscribe((res: Product[]) => (this.productsList = res));
+    this.data.getProducts().subscribe((res: Product[]) => {
+      this.productsList = res;
+      console.log(res[0]);
+      
+    });
   }
   editProduct(pid: number) {
     this.router.navigate([`admin/edit-product/${pid}`]);

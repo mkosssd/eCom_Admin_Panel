@@ -1,22 +1,24 @@
-<div class="row">
-  <div class="col-2 position-fixed h-100 bg-white rounded">
-    <div class="py-3 mx-1">
-      <div class="mt-0 mb-3 mx-2">
-        <a class="navbar-brand fw-bold" routerLink="/">
-          <img src="\assets\logo.svg" alt="Anywhere-logo" />
-          <span class="h4 fw-bold"> Anywhere App </span>
-        </a>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-2 position-fixed h-100 bg-white rounded">
+      <div class="py-3 mx-1">
+        <div class="mt-0 mb-3 mx-2">
+          <a class="navbar-brand fw-bold" routerLink="/">
+            <img src="\assets\logo.svg" alt="Anywhere-logo" />
+            <span class="h4 fw-bold"> Anywhere App </span>
+          </a>
+        </div>
+        <ul class="list-group">
+          <a routerLink="product-list" class="list-group-item">Product List</a>
+          <a routerLink="add-product" class="list-group-item">Add Product</a>
+          <a routerLink="add-category" class="list-group-item">Add Category</a>
+        </ul>
       </div>
-      <ul class="list-group">
-        <a routerLink="product-list" class="list-group-item">Product List</a>
-        <a routerLink="add-product" class="list-group-item">Add Product</a>
-        <a routerLink="add-category" class="list-group-item">Add Category</a>
-      </ul>
+
+      <app-header></app-header>
     </div>
-    
-    <app-header></app-header>
-  </div>
-  <div class="col-8 mx-auto rounded ">
-    <router-outlet></router-outlet>
+    <div class="col-8 mx-auto rounded">
+      <router-outlet></router-outlet>
+    </div>
   </div>
 </div>
