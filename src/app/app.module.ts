@@ -27,6 +27,8 @@ import { HeaderComponent } from './header/header.component';
 import { LoaderComponent } from './loader/loader.component';
 import { AngularCropperjsModule } from 'angular-cropperjs';
 import { AngularCropperComponent } from './angular-cropper/angular-cropper.component';
+import { SideBarComponent } from './side-bar/side-bar.component';
+import { PageTitleComponent } from './page-title/page-title.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -40,6 +42,8 @@ import { AngularCropperComponent } from './angular-cropper/angular-cropper.compo
     EditProductComponent,
     HeaderComponent,
     AngularCropperComponent,
+    SideBarComponent,
+    PageTitleComponent,
   ],
   imports: [
     CloudinaryModule,

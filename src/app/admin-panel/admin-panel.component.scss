@@ -1,6 +1,39 @@
-#filterBar{
-    position: fixed;
-    left: 4%;
-    border-radius: 10px;
-    background-color: #feffff !important;
-}
+
+@media screen and (max-width: 1200px) {
+    .sidebar {
+      transition: all 330ms;
+      height: 100vh;
+      position: fixed;
+      left: -100%;
+      padding-top: 10px;
+      top: 0;
+      display: flex;
+      z-index: 500;
+    }
+    .showSideBar {
+      left: 0;
+    }
+    .overlay {
+      width: 100%;
+      transition: all 330ms;
+      position: fixed;
+      left: 0;
+      z-index: -1;
+      height: 100%;
+      top: 0;
+      background-color: rgba(0, 0, 0, 0.95);
+    }
+  }
+ 
+  .show {
+    margin-bottom: 35%;
+    background-color: transparent;
+    width: 100% !important;
+    transition: all 500ms;
+  }
+  a:hover,
+  a:focus {
+    background-color: black !important;
+    padding: 0 auto;
+  }
+  

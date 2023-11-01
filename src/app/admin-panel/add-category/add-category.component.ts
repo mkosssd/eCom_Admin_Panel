@@ -10,23 +10,28 @@ import { Router } from '@angular/router';
 })
 export class AddCategoryComponent implements OnInit {
   constructor(private data: DataService, private router: Router) {}
-  cat: string[];
+  category: string[];
   categoryForm: FormGroup;
+  isLoading = false
   ngOnInit(): void {
+    this.isLoading = true
     this.categoryForm = new FormGroup({
       category: new FormControl('', Validators.required),
     });
 
     this.data.getCategories().subscribe((res: any) => {
-      this.cat = Object.values(res);
+      this.category= Object.values(res);
+      this.isLoading=false
     });
+  
   }
   formHandler() {
     let categoryName: string = this.categoryForm.value['category'];
     console.log(categoryName);
 
-    this.cat.push(categoryName);
-    this.data.setCategories({ ...this.cat });
+    this.category.push(categoryName);
+    this.data.setCategories({ ...this.category});
     this.router.navigate(['/']);
   }
+
 }

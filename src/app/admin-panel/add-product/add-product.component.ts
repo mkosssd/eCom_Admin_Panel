@@ -74,7 +74,11 @@ export class AddProductComponent implements OnInit {
   }
   formHandler() {
     this.isLoading = true;
-    let formValue = this.productForm.value;
+    let formValue = {
+      ...this.productForm.value,
+      price: +this.productForm.value['price'],
+      stock: +this.productForm.value['stock'],
+    };
     let img: string[] = [];
 
     const refStorage = ref(this.storage, `images/${formValue.title}`);

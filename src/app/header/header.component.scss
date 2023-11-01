@@ -1,0 +1,10 @@
+.dropdown {
+  &:hover {
+    .dropdown-menu {
+      min-width: 250px !important;
+      display: inline;
+      top: 100%;
+      right: 0%;
+    }
+  }
+}

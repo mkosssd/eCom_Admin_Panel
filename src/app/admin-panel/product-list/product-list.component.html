@@ -1,49 +1,75 @@
 <div class="text-center col-1 mx-auto">
   <app-loader *ngIf="!productsList"></app-loader>
 </div>
-<div class="col-11 mx-auto bg-white p-3 mt-0 rounded" *ngIf="productsList">
-  <table class="table">
-    <thead>
-      <tr class="small text-uppercase">
-        <th class="text-secondary" colspan="2">Product</th>
-        <th class="text-secondary">Price</th>
-        <th class="text-secondary">Category</th>
-        <th class="text-secondary">QTY</th>
-        <th class="text-secondary">Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr
-        *ngFor="let product of productsList; index as i"
-        class="small text-uppercase align-middle"
+<div class="container" *ngIf="productsList">
+  <div class="row ms-1 bg-white shadow rounded">
+    <div class="col-12 my-2 py-2">
+      <a
+        class="btn btn-primary fw-medium btn-sm float-end"
+        routerLink="../add-product"
+        >Add Product</a
       >
-        <td class="col-1">
-          <img
-            src="{{ product.images[0] }}"
-            alt="{{ product.title }}"
-            width="50px"
-            height="50px"
-          />
-        </td>
-        <td class="fw-semibold col">
-          {{
-            product.title.length > 15
-              ? (product.title | slice : 0 : 15) + "..."
-              : product.title
-          }}
-        </td>
-        <td class="text-secondary fw-semibold col-2">${{ product.price }}.00</td>
-        <td class="text-secondary fw-semibold col-2">{{ product.category }}</td>
-        <td class="text-secondary fw-semibold col-2">{{ product.stock }}</td>
-        <td class="text-secondary fw-semibold col-2">
-          <button class="btn btn-sm" (click)="editProduct(product.id)">
-            <i class="bi bi-pencil-square"></i>
-          </button>
-          <button class="btn btn-sm" (click)="deleteProduct(product.id, i)">
-            <i class="bi bi-trash"></i>
-          </button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+    </div>
+    
+    <div class="col-12">
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr class="small text-uppercase">
+              <th class="text-secondary" colspan="2">Product</th>
+              <th class="text-secondary">Price</th>
+              <th class="text-secondary">Category</th>
+              <th class="text-secondary">QTY</th>
+              <th class="text-secondary">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              *ngFor="let product of productsList; index as i"
+              class="small text-uppercase align-middle"
+            >
+              <td class="col-1">
+                <img
+                  src="{{ product.images[0] }}"
+                  alt="{{ product.title }}"
+                  width="50px"
+                  height="50px"
+                />
+              </td>
+              <td class="fw-semibold col-2">
+                {{
+                  product.title.length > 15
+                    ? (product.title | slice : 0 : 15) + "..."
+                    : product.title
+                }}
+              </td>
+              <td class="text-secondary fw-semibold col-2">
+                ${{ product.price }}.00
+              </td>
+              <td class="text-secondary fw-semibold col-2">
+                {{ product.category }}
+              </td>
+              <td class="text-secondary fw-semibold col-1">
+                {{ product.stock }}
+              </td>
+              <td class="text-secondary fw-semibold col-1">
+                <button
+                  class="btn text-primary btn-sm"
+                  (click)="editProduct(product.id)"
+                >
+                  <i class="bi bi-pen"></i>
+                </button>
+                <button
+                  class="btn text-danger btn-sm"
+                  (click)="deleteProduct(product.id, i)"
+                >
+                  <i class="bi bi-trash"></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 </div>

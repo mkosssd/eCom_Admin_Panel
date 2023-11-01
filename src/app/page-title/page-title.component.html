@@ -1,0 +1,33 @@
+<div class="container mx-auto">
+  <div class="row">
+    <h2 class="h4 fw-bold text-black my-2">{{ currentRoute | uppercase }}</h2>
+
+    <nav aria-label="breadcrumb" style="--bs-breadcrumb-divider: '>'">
+      <ol class="breadcrumb fw-bold">
+        <li class="breadcrumb-item small">
+          <a routerLink="/" class="text-decoration-none text-muted">ADMIN</a>
+        </li>
+        <li
+          class="breadcrumb-item active small fw-bold text-muted"
+          aria-current="page"
+        >
+          <a routerLink="/{{ currentRouteURL }}" class="text-decoration-none text-muted">
+            {{ currentRoute | uppercase }}</a
+          >
+        </li>
+        <li
+          *ngIf="isId"
+          class="breadcrumb-item active small fw-bold text-muted"
+          aria-current="page"
+        >
+          <a
+            routerLink="/{{ currentRouteURL }}"
+            class="text-decoration-none text-muted"
+          >
+            {{ productName | uppercase }}</a
+          >
+        </li>
+      </ol>
+    </nav>
+  </div>
+</div>

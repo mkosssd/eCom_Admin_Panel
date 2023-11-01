@@ -55,8 +55,7 @@ export class AngularCropperComponent {
   croppedImageList: string[] = [];
 
   ngOnChanges(): void {
-    if(this.imageUrl)
-    this.targetImg = this.imageUrl;
+    if (this.imageUrl) this.targetImg = this.imageUrl;
   }
   onImageUpload(event: any): void {
     this.croppedImage = '';

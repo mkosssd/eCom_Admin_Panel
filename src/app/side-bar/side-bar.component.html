@@ -1,0 +1,78 @@
+<div class="row">
+  <div class="col-12">
+    <div class="col-2 m-0 p-0 sidebar z-3" id="sidebar">
+      <div class="py-3 position-fixed h-100 bg-black text-white px-4 ms-0 mt-0 mt-lg-5 " id="minWidth">
+        <div class="mt-0 mb-3  mx-2 d-lg-none d-block">
+          <a class="navbar-brand fw-bold" routerLink="/">
+            <img src="\assets\logo.svg" alt="Anywhere-logo" />
+            <span class="h4 fw-bold"> Anywhere App </span>
+          </a>
+        </div>
+
+        <div class="dropdown py-2 mt-3">
+          <button
+            class="btn border-0 col-12 text-white btn-sm d-flex justify-content-between"
+            type="button"
+            data-bs-toggle="dropdown"
+            data-bs-auto-close="false"
+            aria-expanded="false"
+          >
+            <span class="col-7 text-start fw-medium"
+              ><i class="bi bi-archive me-2" ></i> Product
+            </span>
+            <i class="bi bi-chevron-down"></i>
+          </button>
+
+          <ul
+            class="dropdown-menu border-0"
+            role="menu"
+            aria-labelledby="dLabel"
+          >
+            <li>
+              <a
+                class="dropdown-item small text-white"
+                routerLink="product-list"
+                ><i class="bi bi-list-stars me-1"></i> Product List</a
+              >
+            </li>
+            <li>
+              <a
+                class="dropdown-item small text-white"
+                routerLink="add-product"
+              >
+                <img src="../../assets/addToDB.svg" class="me-1" alt="addProduct" />
+                Add Product</a
+              >
+            </li>
+          </ul>
+        </div>
+        <div class="dropdown py-2">
+          <button
+            class="btn border-0 col-12 text-white btn-sm d-flex justify-content-between"
+            type="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+            data-bs-auto-close="false"
+          >
+            <span class="col-7 text-start fw-medium">
+              <img src="../../assets/category.svg" alt="Category" class="me-2"/>
+              Category
+            </span>
+            <i class="bi bi-chevron-down"></i>
+          </button>
+          <ul class="dropdown-menu border-0">
+            <li>
+              <a
+                class="dropdown-item small text-white"
+                routerLink="add-category"
+              >
+                <img src="../../assets/addToDB.svg" alt="addToDB" class="me-1" />
+                Add Category</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

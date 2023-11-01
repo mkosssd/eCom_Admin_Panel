@@ -1,24 +1,25 @@
 <div class="container-fluid">
   <div class="row">
-    <div class="col-2 position-fixed h-100 bg-white rounded">
-      <div class="py-3 mx-1">
-        <div class="mt-0 mb-3 mx-2">
-          <a class="navbar-brand fw-bold" routerLink="/">
-            <img src="\assets\logo.svg" alt="Anywhere-logo" />
-            <span class="h4 fw-bold"> Anywhere App </span>
-          </a>
-        </div>
-        <ul class="list-group">
-          <a routerLink="product-list" class="list-group-item">Product List</a>
-          <a routerLink="add-product" class="list-group-item">Add Product</a>
-          <a routerLink="add-category" class="list-group-item">Add Category</a>
-        </ul>
-      </div>
-
-      <app-header></app-header>
+    <div class="col-2 p-0 m-0 sidebar" id="sidebars">
+      <div
+        class="d-block d-xl-none p-0 m-0"
+        (click)="toggler()"
+        id="overlay"
+      ></div>
+      <app-side-bar></app-side-bar>
     </div>
-    <div class="col-8 mx-auto rounded">
-      <router-outlet></router-outlet>
+    <div class="col-xl-10 col-12 mt-5 py-3">
+      <div class="row mt-4">
+        <div class="col-12 d-block d-xl-none">
+          <button (click)="toggler()" class="btn btn-outline-primary float-end">
+            <i class="bi bi-list"></i>
+          </button>
+        </div>
+        <div class="col-12">
+          <app-page-title></app-page-title>
+          <router-outlet></router-outlet>
+        </div>
+      </div>
     </div>
   </div>
 </div>

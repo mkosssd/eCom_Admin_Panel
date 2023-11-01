@@ -99,7 +99,7 @@ export class AuthService {
   logout() {
     localStorage.removeItem('loggedData');
     this.user.next(null);
-    this.router.navigate(['/login'])
+    this.router.navigate(['/login']);
     if (this.tokenExpirationTimer) {
       clearTimeout(this.tokenExpirationTimer);
     }
@@ -107,6 +107,10 @@ export class AuthService {
   }
   private tokenExpirationTimer: any;
   autoLogin() {
+    if (this.tokenExpirationTimer <= 0) {
+      localStorage.removeItem('loggedUser');
+      return;
+    }
     const loggedDataString: string | null = localStorage.getItem('loggedData');
     const loggedUserData: {
       email: string;

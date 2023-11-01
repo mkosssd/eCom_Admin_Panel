@@ -1,12 +1,11 @@
 <div class="cropper-wrapper">
-  <label for="image" class="form-label">Image</label>
+  <label for="image" class="form-label">Image<span class="text-danger small">*</span></label>
   <input
     type="file"
     (change)="onImageUpload($event)"
-    class="form-control"
+    class="form-control my-2"
     accept="image/png,image/jpeg,image/webp"
   />
-  
 
   <!-- LOAD ERROR -->
   <div class="alert alert-warning" *ngIf="loadError">

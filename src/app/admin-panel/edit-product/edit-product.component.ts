@@ -86,7 +86,11 @@ export class EditProductComponent implements OnInit {
 
   formHandler() {
     this.isLoading=true
-    let formValue = this.productForm.value;
+    let formValue = {
+      ...this.productForm.value,
+      price: +this.productForm.value['price'],
+      stock: +this.productForm.value['stock'],
+    };
     const refStorage = ref(this.storage, `images/${formValue.title}`);
     let img: string[] = [];
 
