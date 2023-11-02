@@ -1,16 +1,18 @@
-#minWidth{
+#minWidth {
   min-width: 250px !important;
+  min-height: 100vh !important;
 }
-  
-  .show {
-    margin-bottom: 35%;
-    background-color: transparent;
-    width: 100% !important;
-    transition: all 500ms;
-  }
-  a:hover,
-  a:focus {
-    background-color: black !important;
-    padding: 0 auto;
-  }
-  
+
+.show {
+  margin-bottom: 35%;
+  background-color: transparent;
+  width: 100% !important;
+  transition: all 500ms;
+}
+
+a:hover,
+a:focus {
+  background-color: #252525 !important;
+  border-radius: 10px;
+  padding: 0 auto;
+}

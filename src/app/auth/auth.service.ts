@@ -109,6 +109,7 @@ export class AuthService {
   autoLogin() {
     if (this.tokenExpirationTimer <= 0) {
       localStorage.removeItem('loggedUser');
+      this.router.navigate(['/login'])
       return;
     }
     const loggedDataString: string | null = localStorage.getItem('loggedData');

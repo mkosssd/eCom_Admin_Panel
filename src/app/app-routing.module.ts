@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { Router, RouterModule, Routes } from '@angular/router';
 import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 import { LoginComponent } from './auth/login/login.component';
 import { SignUpComponent } from './auth/sign-up/sign-up.component';
@@ -19,6 +19,7 @@ const routes: Routes = [
     path: 'admin',
     component: AdminPanelComponent,
     canActivate: [AuthGuard],
+    data: { breadcrumb: 'Home' },
     children: [
       {
         path: '',
@@ -29,25 +30,26 @@ const routes: Routes = [
       {
         path: 'add-product',
         component: AddProductComponent,
-        data: { breadcrumb: { title: 'Add Product' } },
+        data: { breadcrumb: 'Add Product' },
       },
       {
         path: 'add-category',
         component: AddCategoryComponent,
-        data: { breadcrumb: { title: 'Add Category' } },
+        data: { breadcrumb: 'Add Category' },
       },
       {
         path: 'product-list',
         component: ProductListComponent,
-        data: { breadcrumb: { title: 'Product List' } },
+        data: { breadcrumb: 'Product List' },
       },
       {
         path: 'edit-product',
+        data: { breadcrumb: 'Edit Product' },
         children: [
           {
             path: ':id',
             component: EditProductComponent,
-            data: { breadcrumb: { title: 'Edit Product' ,id:true} },
+            data: { breadcrumb: 'Edit Product' },
           },
         ],
       },
@@ -61,4 +63,7 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule {
+
+
+}

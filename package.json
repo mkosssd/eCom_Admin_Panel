@@ -17,7 +17,6 @@
     "@angular/core": "^16.2.0",
     "@angular/fire": "^7.6.1",
     "@angular/forms": "^16.2.0",
-    "@angular/material": "^16.2.4",
     "@angular/platform-browser": "^16.2.0",
     "@angular/platform-browser-dynamic": "^16.2.0",
     "@angular/router": "^16.2.0",
@@ -35,9 +34,11 @@
     "ng2-file-upload": "^5.0.0",
     "ngx-bootstrap": "^11.0.2",
     "ngx-image-cropper": "^7.0.3",
+    "primeng": "^16.7.0",
     "rxjs": "~7.8.0",
     "super-image-cropper": "^1.0.18",
     "tslib": "^2.3.0",
+    "xng-breadcrumb": "^10.0.1",
     "zone.js": "~0.13.0"
   },
   "devDependencies": {

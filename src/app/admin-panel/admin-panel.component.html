@@ -1,25 +1,17 @@
-<div class="container-fluid">
-  <div class="row">
-    <div class="col-2 p-0 m-0 sidebar" id="sidebars">
-      <div
-        class="d-block d-xl-none p-0 m-0"
-        (click)="toggler()"
-        id="overlay"
-      ></div>
-      <app-side-bar></app-side-bar>
-    </div>
-    <div class="col-xl-10 col-12 mt-5 py-3">
-      <div class="row mt-4">
-        <div class="col-12 d-block d-xl-none">
-          <button (click)="toggler()" class="btn btn-outline-primary float-end">
-            <i class="bi bi-list"></i>
-          </button>
-        </div>
-        <div class="col-12">
-          <app-page-title></app-page-title>
-          <router-outlet></router-outlet>
-        </div>
-      </div>
-    </div>
-  </div>
+<div class="d-flex">
+	<div class="p-0 m-0 sidebar flex-shrink-0 " id="sidebars">
+		<div class="d-block d-xl-none p-0 m-0" (click)="toggler()" id="overlay"></div>
+		<app-side-bar></app-side-bar>
+	</div>
+	<div class="w-100 px-5 mt-5 py-3" id="main">
+		<div class="py-4">
+			<div class="d-flex justify-content-between p-2">
+				<app-page-title></app-page-title>
+				<button (click)="toggler()" class="btn btn-outline-primary d-block d-xl-none">
+					<i class="bi bi-list"></i>
+				</button>
+			</div>
+			<router-outlet></router-outlet>
+		</div>
+	</div>
 </div>
