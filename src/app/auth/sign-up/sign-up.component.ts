@@ -21,6 +21,8 @@ export class SignUpComponent {
   passwordRegex = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-])/;
   isValid = false;
   numEx = /^[A-Za-z]+$/;
+  errorMessage: string = ''
+  isError = false
   ngOnInit(): void {
     this.authForm = new FormGroup({
      
@@ -39,7 +41,10 @@ export class SignUpComponent {
 
   onSubmit() {
     console.log(this.authForm);
-    this.auth.signup(this.authForm.value).subscribe();
+    this.auth.signup(this.authForm.value).subscribe(res=>{},errorMessage => {
+      this.errorMessage = errorMessage
+      this.isError = true
+    });
   }
 
   passwordMatch() {

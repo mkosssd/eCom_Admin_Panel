@@ -8,12 +8,17 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
-  constructor(private auth: AuthService,private router:Router) {}
-  error:string=''
-  isEmail = true;
+  constructor(private auth: AuthService, private router: Router) { }
+  errorMessage: string = ''
+  isError = false
   formOp(authFrom: NgForm) {
     let email = authFrom.value.email;
     let password = authFrom.value.password;
-    this.auth.login(email,password).subscribe()
+    this.auth.login(email, password).subscribe(res => { },
+      errorMessage => {
+        this.errorMessage = errorMessage
+        this.isError = true
+      }
+    )
   }
 }

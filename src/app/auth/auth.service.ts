@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { environment } from 'src/enviroments/enviroments';
-import { BehaviorSubject, catchError, tap } from 'rxjs';
+import { BehaviorSubject, catchError, tap, throwError } from 'rxjs';
 import { Router } from '@angular/router';
 import { IntUserData } from './user.model';
 export interface AuthResponseData {
@@ -17,7 +17,7 @@ export interface AuthResponseData {
   providedIn: 'root',
 })
 export class AuthService {
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private http: HttpClient, private router: Router) { }
   users = localStorage.getItem('users') || '';
   user = new BehaviorSubject<IntUserData | null>(null);
   objUsers: any;
@@ -32,7 +32,7 @@ export class AuthService {
     return this.http
       .post<AuthResponseData>(
         'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=' +
-          environment.API_KEY,
+        environment.API_KEY,
         {
           email,
           password,
@@ -52,8 +52,11 @@ export class AuthService {
       );
   }
   private handleError(error: HttpErrorResponse) {
-    console.log(error.error.error.message);
-    return error.error;
+   let errorMessage =  error.error.error.message
+    if(error.error.error.message == 'INVALID_LOGIN_CREDENTIALS'){
+      return throwError('Invalid Login Credentials!')
+    }
+    return throwError(error.error.error.message)
   }
   private handleAuth(
     email: string,

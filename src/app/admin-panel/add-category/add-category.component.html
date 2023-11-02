@@ -1,72 +1,66 @@
-<div class="container mt-5">
-  <div class="row" *ngIf="isLoading">
-    <div class="col-2 mx-auto">
-      <app-loader></app-loader>
-    </div>
+<div class="row" *ngIf="isLoading">
+  <div class="col-2 mx-auto">
+    <app-loader></app-loader>
   </div>
-  <div class="row" *ngIf="!isLoading">
-    <div class="col-12 bg-white shadow rounded p-3">
-      <div class="ms-1 bg-white shadow rounded">
-       
+</div>
+<div class=" bg-white shadow rounded p-3" *ngIf="!isLoading">
+
+  <div class="p-4 d-flex justify-content-end align-items-center border-bottom">
+    <button type="button" class="btn btn-primary btn-sm py-2 px-4" data-bs-toggle="modal" data-bs-target="#addCategory">
+      Add a Category
+    </button>
+  </div>
+  <div class="table-responsive p-4 w-100">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Category Name</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let cat of category; index as i">
+          <th scope="row">{{ i + 1 }}</th>
+          <td>{{ cat }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div class="modal fade" tabindex="-1" id="addCategory">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Add Category</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-	  <div class="p-4 d-flex justify-content-end align-items-center border-bottom">
-		<button type="button" class="btn btn-primary btn-sm py-2 px-4" data-bs-toggle="modal" data-bs-target="#addCategory">
-			Add a Category
-		  </button>
-	  </div>
-      <div class="table-responsive p-4 w-100">
-        <table class="table">
-          <thead>
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">Category Name</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let cat of category; index as i">
-              <th scope="row">{{ i + 1 }}</th>
-              <td>{{ cat }}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-    <div class="modal fade" tabindex="-1" id="addCategory">
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Add Category</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            <div class="col-12">
-              <form [formGroup]="categoryForm" class="bg-white" (ngSubmit)="formHandler()">
-                <div class="row">
-                  <div class="col-12">
-                    <label for="category" class="form-label">Category</label>
-                    <input type="text" formControlName="category" class="form-control" id="category" />
-                    <span class="small text-danger" *ngIf="
+      <div class="modal-body">
+        <div class="col-12">
+          <form [formGroup]="categoryForm" class="bg-white" (ngSubmit)="formHandler()">
+            <div class="row">
+              <div class="col-12">
+                <label for="category" class="form-label">Category</label>
+                <input type="text" formControlName="category" class="form-control" id="category" />
+                <span class="small text-danger" *ngIf="
                         !categoryForm.get('category').valid &&
                         categoryForm.get('category').touched
                       ">
-                      <span class="small text-danger" *ngIf="categoryForm.get('category').errors['required']">
-                        Category is required
-                      </span>
-                      <span class="small text-danger" *ngIf="categoryForm.get('category').errors['minlength']">
-                        Category should be of minimum 3 chars.
-                      </span>
-                    </span>
-                  </div>
-                </div>
-              </form>
+                  <span class="small text-danger" *ngIf="categoryForm.get('category').errors['required']">
+                    Category is required
+                  </span>
+                  <span class="small text-danger" *ngIf="categoryForm.get('category').errors['minlength']">
+                    Category should be of minimum 3 chars.
+                  </span>
+                </span>
+              </div>
             </div>
-          </div>
-          <div class="modal-footer">
-            <button class="btn btn-primary" [disabled]="!categoryForm.valid">
-              Add
-            </button>
-          </div>
+          </form>
         </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary" [disabled]="!categoryForm.valid">
+          Add
+        </button>
       </div>
     </div>
   </div>

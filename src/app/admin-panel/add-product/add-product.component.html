@@ -1,113 +1,99 @@
-<div class="container my-5">
-	<div class="row">
-		<div class="col-12 text-center" *ngIf="isLoading">
-			<app-loader></app-loader>
-		</div>
-	</div>
-	<div class="row mx-auto" *ngIf="!isLoading">
-		<form [formGroup]="productForm" (ngSubmit)="formHandler()">
-			<div class="row">
-				<div class="col-12 col-xl-7">
-					<div class="row">
-						<div class="col-12 bg-white shadow p-3 rounded">
-							<div class="row">
-								<p class="col-12 fw-bold h5 text-black my-2">General</p>
-								<div class="col-12 my-1">
-									<label for="title" class="form-label">Product Name<span
-											class="text-danger small">*</span></label>
-									<input type="text" formControlName="title" class="form-control" id="title" />
+<div class="col-12 text-center" *ngIf="isLoading">
+	<app-loader></app-loader>
+</div>
+<div  *ngIf="!isLoading">
+	<form [formGroup]="productForm" (ngSubmit)="formHandler()">
+		<div class="row">
+			<div class="col-12 col-xl-7">
+					<div class="bg-white shadow p-3 rounded">
+							<p class="col-12 fw-bold h5 text-black my-2">General</p>
+							<div class="col-12 my-1">
+								<label for="title" class="form-label">Product Name<span
+										class="text-danger small">*</span></label>
+								<input type="text" formControlName="title" class="form-control" id="title" />
 
-									<span class="small text-danger" *ngIf="
+								<span class="small text-danger" *ngIf="
                       !productForm.get('title').valid &&
                       productForm.get('title').touched
                     ">
-										<span class="small text-danger"
-											*ngIf="productForm.get('title').errors['required']">
-											Title is required
-										</span>
+									<span class="small text-danger" *ngIf="productForm.get('title').errors['required']">
+										Title is required
 									</span>
-								</div>
+								</span>
+							</div>
 
-								<div class="col-12 my-1">
-									<label for="category" class="form-label">Category<span
-											class="text-danger small">*</span></label>
-									<select formControlName="category" id="category" class="form-select"
-										ngModel="general">
-										<option *ngFor="let item of list" [value]="item">
-											{{ item | uppercase }}
-										</option>
-									</select>
-									<span class="small text-danger" *ngIf="
+							<div class="col-12 my-1">
+								<label for="category" class="form-label">Category<span
+										class="text-danger small">*</span></label>
+								<select formControlName="category" id="category" class="form-select" ngModel="general">
+									<option *ngFor="let item of list" [value]="item">
+										{{ item | uppercase }}
+									</option>
+								</select>
+								<span class="small text-danger" *ngIf="
                       !productForm.get('category').valid &&
                       productForm.get('category').touched
                     ">
-										<span class="small text-danger"
-											*ngIf="productForm.get('category').errors['required']">
-											Category is required
-										</span>
+									<span class="small text-danger"
+										*ngIf="productForm.get('category').errors['required']">
+										Category is required
 									</span>
-								</div>
+								</span>
 							</div>
-						</div>
-						<div class="col-12 bg-white shadow p-3 rounded my-4">
-							<p class="col-12 fw-bold h5 text-black mt-2 mb-3">Media</p>
-
-							<app-angular-cropper [imageUrl]="targetImg"
-								(base64)="angularCropperHandler($event)"></app-angular-cropper>
-						</div>
 					</div>
-				</div>
-				<div class="col-12 col-xl-4 mx-auto">
-					<div class="row">
-						<div class="col-12 mx-auto bg-white shadow p-3 rounded">
-							<p class="col-12 fw-bold h5 text-black my-2">Pricing & Stock</p>
-							<div class="row">
-								<div class="col-12 my-1">
-									<label for="price" class="form-label">Price<span
-											class="text-danger small">*</span></label>
-									<input type="text" formControlName="price" class="form-control" id="price" />
-									<span class="small text-danger" *ngIf="
+					<div class="col-12 bg-white shadow p-3 rounded my-4">
+						<p class="col-12 fw-bold h5 text-black mt-2 mb-3">Media</p>
+
+						<app-angular-cropper [imageUrl]="targetImg"
+							(base64)="angularCropperHandler($event)"></app-angular-cropper>
+					</div>
+			</div>
+			<div class="col-12 col-xl-4 mx-auto">
+				<div class="row">
+					<div class="col-12 mx-auto bg-white shadow p-3 rounded">
+						<p class="col-12 fw-bold h5 text-black my-2">Pricing & Stock</p>
+						<div class="row">
+							<div class="col-12 my-1">
+								<label for="price" class="form-label">Price<span
+										class="text-danger small">*</span></label>
+								<input type="text" formControlName="price" class="form-control" id="price" />
+								<span class="small text-danger" *ngIf="
                     !productForm.get('price').valid &&
                     productForm.get('price').touched
                   ">
-										<span class="small text-danger"
-											*ngIf="productForm.get('price').errors['pattern']">
-											Price should only contain numbers.
-										</span>
-										<span class="small text-danger"
-											*ngIf="productForm.get('price').errors['required']">
-											Price is required
-										</span>
+									<span class="small text-danger" *ngIf="productForm.get('price').errors['pattern']">
+										Price should only contain numbers.
 									</span>
-								</div>
+									<span class="small text-danger" *ngIf="productForm.get('price').errors['required']">
+										Price is required
+									</span>
+								</span>
+							</div>
 
-								<div class="col-12 my-1">
-									<label for="stock" class="form-label">Stock<span
-											class="text-danger small">*</span></label>
-									<input type="text" formControlName="stock" class="form-control" id="stock" />
-									<span class="small text-danger" *ngIf="
+							<div class="col-12 my-1">
+								<label for="stock" class="form-label">Stock<span
+										class="text-danger small">*</span></label>
+								<input type="text" formControlName="stock" class="form-control" id="stock" />
+								<span class="small text-danger" *ngIf="
                     !productForm.get('stock').valid &&
                     productForm.get('stock').touched
                   ">
-										<span class="small text-danger"
-											*ngIf="productForm.get('stock').errors['pattern']">
-											Stock should only contain numbers.
-										</span>
-										<span class="small text-danger"
-											*ngIf="productForm.get('stock').errors['required']">
-											Stock is required
-										</span>
+									<span class="small text-danger" *ngIf="productForm.get('stock').errors['pattern']">
+										Stock should only contain numbers.
 									</span>
-								</div>
+									<span class="small text-danger" *ngIf="productForm.get('stock').errors['required']">
+										Stock is required
+									</span>
+								</span>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-			<div class="col my-2"></div>
-			<button class="btn btn-success" [disabled]="!productForm.valid || !base64">
-				ADD
-			</button>
-		</form>
-	</div>
+		</div>
+		<div class="col my-2"></div>
+		<button class="btn btn-success" [disabled]="!productForm.valid || !base64">
+			ADD
+		</button>
+	</form>
 </div>
