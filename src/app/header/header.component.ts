@@ -7,12 +7,15 @@ import { AuthService } from '../auth/auth.service';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent {
-  constructor(private auth: AuthService) {}
+  constructor(private auth: AuthService) { }
   isAuth = false;
+  userMail : string
   ngOnInit(): void {
     this.auth.user.subscribe((user) => {
       if (user) {
         this.isAuth = true;
+        this.userMail  = user.email
+        
       } else {
         this.isAuth = false;
       }

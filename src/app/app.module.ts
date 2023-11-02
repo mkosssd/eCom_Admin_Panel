@@ -24,7 +24,8 @@ import { SignUpComponent } from './auth/sign-up/sign-up.component';
 import { HeaderComponent } from './header/header.component';
 import { LoaderComponent } from './loader/loader.component';
 import { PageTitleComponent } from './page-title/page-title.component';
-import { SideBarComponent } from './side-bar/side-bar.component';
+import { SideBarComponent } from './side-bar/side-bar.component'; 
+import { NgxPaginationModule } from 'ngx-pagination'; 
 @NgModule({
   declarations: [
     AppComponent,
@@ -46,6 +47,7 @@ import { SideBarComponent } from './side-bar/side-bar.component';
     AngularFireStorageModule,
     AppRoutingModule,
     FormsModule,
+    NgxPaginationModule,
     ImageCropperModule,
     AngularCropperjsModule,
     HttpClientModule,

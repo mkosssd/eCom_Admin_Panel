@@ -31,8 +31,7 @@ export class AuthService {
     const password = form.inputPassword;
     return this.http
       .post<AuthResponseData>(
-        'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=' +
-        environment.API_KEY,
+        'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=' + environment.ADMIN_AUTH_API_KEY,
         {
           email,
           password,
@@ -48,6 +47,7 @@ export class AuthService {
             resData.idToken,
             +resData.expiresIn
           );
+          this.router.navigate(['/login'])
         })
       );
   }
@@ -102,7 +102,7 @@ export class AuthService {
   login(email: string, password: string) {
     return this.http
       .post<AuthResponseData>(
-        'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyBsv9RRWMipsQbrgOvq16gClAraUZRZA3U',
+        'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=' + environment.ADMIN_AUTH_API_KEY,
         {
           email,
           password,

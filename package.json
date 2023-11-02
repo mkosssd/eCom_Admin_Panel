@@ -34,6 +34,7 @@
     "ng2-file-upload": "^5.0.0",
     "ngx-bootstrap": "^11.0.2",
     "ngx-image-cropper": "^7.0.3",
+    "ngx-pagination": "^6.0.3",
     "primeng": "^16.7.0",
     "rxjs": "~7.8.0",
     "super-image-cropper": "^1.0.18",
