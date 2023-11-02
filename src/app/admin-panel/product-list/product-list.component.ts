@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, Input,OnInit} from "@angular/core";import { DataService } from '../data.service';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from "@angular/core"; import { DataService } from '../data.service';
 import { Product } from 'src/app/shared/cart-data.service';
 import { Router } from '@angular/router';
 
@@ -10,25 +10,12 @@ import { Router } from '@angular/router';
 export class ProductListComponent implements OnInit {
   productsList: Product[];
   constructor(private data: DataService, private router: Router) { }
-  pageId: number = 1;
-  isLoading: boolean = false;
-  totalPages: number;
-  pagesArray: number[];
-  indexArray: number[];
+
   ngOnInit(): void {
     this.data.getProducts().subscribe((res: Product[]) => {
       this.productsList = res;
       console.log(res[0]);
-      this.totalPages = Math.ceil(this.productsList.length / 10);
-      console.log(this.totalPages);
-      
-      this.pagesArray = Array.from(
-        { length: this.totalPages },
-        (_, i) => i + 1
-      );
 
-      this.indexArray = [];
-      this.pagesArray.map((page) => this.indexArray.push((page - 1) * 10));
     });
   }
   editProduct(pid: number) {
