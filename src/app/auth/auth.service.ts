@@ -51,12 +51,40 @@ export class AuthService {
         })
       );
   }
-  private handleError(error: HttpErrorResponse) {
-   let errorMessage =  error.error.error.message
-    if(error.error.error.message == 'INVALID_LOGIN_CREDENTIALS'){
+  private handleError(errorResponse: HttpErrorResponse) {
+
+    let errorMessage = 'An unknown error occured!'
+    if (!errorResponse.error || !errorResponse.error.error) {
+      return throwError(errorMessage)
+    }
+    switch (errorResponse.error.error.message) {
+      case 'EMAIL_EXISTS':
+        errorMessage = 'The email address is already in use!'
+        break
+      case 'OPERATION_NOT_ALLOWED':
+        errorMessage = 'Password sign-in is disabled for this project!'
+        break
+      case 'INVALID_EMAIL':
+        errorMessage = 'Please enter a valid email'
+        break
+      case 'EMAIL_NOT_FOUND':
+        errorMessage = 'user not found!'
+        break
+      case 'INVALID_PASSWORD':
+        errorMessage = 'Invalid password!'
+        break
+      case 'USER_DISABLED':
+        errorMessage = 'User has been disabled'
+        break
+      default:
+        errorMessage = errorResponse.error.error.message
+    }
+
+    if (errorResponse.error.error.message == 'INVALID_LOGIN_CREDENTIALS') {
       return throwError('Invalid Login Credentials!')
     }
-    return throwError(error.error.error.message)
+    return throwError(errorMessage)
+
   }
   private handleAuth(
     email: string,
