@@ -8,6 +8,7 @@ import { AddProductComponent } from './admin-panel/add-product/add-product.compo
 import { AddCategoryComponent } from './admin-panel/add-category/add-category.component';
 import { ProductListComponent } from './admin-panel/product-list/product-list.component';
 import { EditProductComponent } from './admin-panel/edit-product/edit-product.component';
+import { ErrorPageComponent } from './error-page/error-page.component';
 const routes: Routes = [
   {
     path: '',
@@ -57,6 +58,7 @@ const routes: Routes = [
   },
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignUpComponent },
+  {path:'**',pathMatch:'full',component:ErrorPageComponent}
 ];
 
 @NgModule({

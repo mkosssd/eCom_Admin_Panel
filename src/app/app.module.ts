@@ -25,7 +25,8 @@ import { HeaderComponent } from './header/header.component';
 import { LoaderComponent } from './loader/loader.component';
 import { PageTitleComponent } from './page-title/page-title.component';
 import { SideBarComponent } from './side-bar/side-bar.component'; 
-import { NgxPaginationModule } from 'ngx-pagination'; 
+import { NgxPaginationModule } from 'ngx-pagination';
+import { ErrorPageComponent } from './error-page/error-page.component'; 
 @NgModule({
   declarations: [
     AppComponent,
@@ -41,6 +42,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
     AngularCropperComponent,
     SideBarComponent,
     PageTitleComponent,
+    ErrorPageComponent,
   ],
   imports: [
     BrowserModule,
