@@ -11,7 +11,7 @@
       <table class="table">
         <thead>
           <tr class="small text-uppercase">
-            <th class="text-secondary" colspan="2">Product</th>
+            <th class="text-secondary" colspan="2" >Product</th>
             <th class="text-secondary">Price</th>
             <th class="text-secondary">Category</th>
             <th class="text-secondary">QTY</th>
@@ -24,7 +24,7 @@
             <td class="col-1">
               <img src="{{ product.images[0] }}" alt="{{ product.title }}" width="50px" height="50px" />
             </td>
-            <td class="fw-semibold col-2">
+            <td class="fw-semibold colTitle">
               {{
               product.title.length > 15
               ? (product.title | slice : 0 : 15) + "..."

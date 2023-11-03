@@ -44,21 +44,15 @@ const routes: Routes = [
         data: { breadcrumb: 'Product List' },
       },
       {
-        path: 'edit-product',
+        path: 'edit-product/:id',
         data: { breadcrumb: 'Edit Product' },
-        children: [
-          {
-            path: ':id',
-            component: EditProductComponent,
-            data: { breadcrumb: 'Edit Product' },
-          },
-        ],
+        component: EditProductComponent,
       },
     ],
   },
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignUpComponent },
-  {path:'**',pathMatch:'full',component:ErrorPageComponent}
+  { path: '**', pathMatch: 'full', component: ErrorPageComponent }
 ];
 
 @NgModule({

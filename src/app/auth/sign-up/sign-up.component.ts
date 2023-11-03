@@ -1,12 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import {
+import { Component, ElementRef, ViewChild } from '@angular/core';import {
   FormGroup,
   FormControl,
   FormBuilder,
   Validators,
 } from '@angular/forms';
 import { AuthService } from '../auth.service';
-
+declare const bootstrap: any; // Declare 'bootstrap' as any
 @Component({
   selector: 'app-sign-up',
   templateUrl: './sign-up.component.html',
@@ -52,6 +51,18 @@ export class SignUpComponent {
       this.ifMatched = true;
     } else {
       this.ifMatched = false;
+    }
+  }
+  @ViewChild('toastTrigger') toastTrigger: ElementRef;
+  @ViewChild('toastLiveExample') toastLiveExample: ElementRef;
+
+  ngAfterViewInit() {
+    const toastBootstrap = new bootstrap.Toast(this.toastLiveExample.nativeElement);
+
+    if (this.toastTrigger) {
+      this.toastTrigger.nativeElement.addEventListener('click', () => {
+        toastBootstrap.show();
+      });
     }
   }
 }

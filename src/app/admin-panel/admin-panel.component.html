@@ -1,9 +1,9 @@
 <div class="d-flex">
 	<div class="p-0 m-0 sidebar flex-shrink-0 " id="sidebars">
 		<div class="d-block d-xl-none p-0 m-0" (click)="toggler()" id="overlay"></div>
-		<app-side-bar></app-side-bar>
+		<app-side-bar [callbackFunction]=toggler></app-side-bar>
 	</div>
-	<div class="w-100 px-5 mt-5 py-3" id="main">
+	<div class="py-5 px-3 w-100 " id="main">
 		<div class="py-4">
 			<div class="d-flex justify-content-between p-2">
 				<app-page-title></app-page-title>

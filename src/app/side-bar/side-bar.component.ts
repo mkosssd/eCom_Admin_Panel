@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-side-bar',
@@ -6,7 +6,10 @@ import { Component } from '@angular/core';
   styleUrls: ['./side-bar.component.scss'],
 })
 export class SideBarComponent {
-
+  @Input() callbackFunction: () => void;
+  toggler(){
+    this.callbackFunction()
+  }
   elements = [
     {
       menu_label: 'Product',
@@ -36,16 +39,16 @@ export class SideBarComponent {
     }
   ]
 
-  toggler() {
-    let sidebar = document.getElementById('sidebar').classList;
-    let overlay = document.getElementById('overlay').classList;
-    if (sidebar.contains('showSideBar')) {
-      sidebar.remove('showSideBar');
-      overlay.remove('overlay');
-    } else {
-      overlay.add('overlay');
-      sidebar.add('showSideBar');
-    }
-  }
+  // toggler() {
+  //   let sidebar = document.getElementById('sidebar').classList;
+  //   let overlay = document.getElementById('overlay').classList;
+  //   if (sidebar.contains('showSideBar')) {
+  //     sidebar.remove('showSideBar');
+  //     overlay.remove('overlay');
+  //   } else {
+  //     overlay.add('overlay');
+  //     sidebar.add('showSideBar');
+  //   }
+  // }
 }
 

@@ -12,7 +12,7 @@ export class PageTitleComponent {
 
   currentRouteURL: string;
   isId = null;
-  pageTitle:string
+  pageTitle: string
   productName: string;
   parentURL: string;
   constructor(private router: Router, private dataService: DataService, private breadcrumbService: BreadcrumbService) {
@@ -34,7 +34,7 @@ export class PageTitleComponent {
       console.log(data);
 
       let breadcrumb = data[1]['breadcrumb'];
-      this.pageTitle=breadcrumb
+      this.pageTitle = breadcrumb
       this.currentRouteURL = router.url;
 
       let id = router.url.split('/').slice(3).join('/');
@@ -42,8 +42,7 @@ export class PageTitleComponent {
 
         this.dataService
           .getProductById(id).subscribe((res) => {
-            this.productName = res[0]['title']
-            breadcrumbService.set('admin/edit-product/:id', this.productName);
+            breadcrumbService.set('admin/edit-product/:id', res[0]['title']);
           });
       }
     });

@@ -20,7 +20,7 @@
 
 				<ul class="dropdown-menu border-0" role="menu" aria-labelledby="dLabel">
 					<li *ngFor="let menu of element.sub_menu">
-						<a class="dropdown-item small text-white py-2" routerLink="{{menu.menu_link}}">
+						<a class="dropdown-item small text-white py-2" routerLink="{{menu.menu_link}}" (click)="toggler()" > 
 							<i class="bi bi-list-stars me-1"></i> {{menu.menu_label}}
 						</a>
 					</li>
