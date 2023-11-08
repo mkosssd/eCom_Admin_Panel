@@ -13,17 +13,17 @@
 				<li class="nav-item " *ngIf="!isAuth">
 					<button class=" btn btn-outline-light " routerLink="/login">Login</button>
 				</li>
-				<ul class="dropdown-menu position-absolute bg-transparent py-3 border-0" *ngIf="isAuth">
-					<div class="bg-white border rounded py-3 my-1 small">
-						<li class="dropdown-item px-3 border-bottom pb-3">
+				<ul class="dropdown-menu position-absolute bg-transparent  border-0" *ngIf="isAuth">
+					<div class="bg-white border rounded   small">
+						<li class="dropdown-item p-3 border-bottom">
 							<img width="50px" class="rounded"
 								src="https://preview.keenthemes.com/metronic8/demo1/assets/media/avatars/300-3.jpg"
-								alt="" />
-							<a class="fw-bold text-decoration-none text-black mx-2"> {{userMail | uppercase}}</a>
+								alt="userImage" />
+							<span class="fw-bold text-decoration-none text-black mx-2"> {{userMail | uppercase}}</span>
 						</li>
 
 						<li>
-							<button class="dropdown-item" (click)="logout()">Logout</button>
+							<button class="dropdown-item text-center py-2" (click)="logout()">Logout</button>
 						</li>
 
 					</div>

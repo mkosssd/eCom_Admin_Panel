@@ -1,3 +1,11 @@
+<div #toastLiveExample class="toast top-0  end-0 position-absolute z-3 " >
+    <div class="toast-header">
+      <strong class="me-auto">Error!</strong>
+      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+    <div class="toast-body">
+      {{errorMessage | uppercase}}  </div>
+  </div>
 <div class="container my-5 pt-5">
     <p class="fw-bold h6 my-0 text-secondary">WELCOME BACK</p>
 
@@ -12,7 +20,6 @@
 
         <form id="form" #authForm="ngForm" (ngSubmit)="formOp(authForm)">
 
-            <span *ngIf="isError" class="text-danger small">{{errorMessage | uppercase}}</span>
             <div class="col-11">
                 <label for="email" class="col-sm-5 col-form-label fw-semibold">Email</label>
                 <input type="email" class="form-control rounded-4 py-3" id="Email" ngModel name="email"

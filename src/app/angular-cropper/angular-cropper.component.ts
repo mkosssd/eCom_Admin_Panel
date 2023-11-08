@@ -60,12 +60,24 @@ export class AngularCropperComponent {
   onImageUpload(event: any): void {
     this.croppedImage = '';
     this.targetImg = '';
-    const file = event.target.files[0];
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => {
-      this.targetImg = reader.result as string;
-    };
+
+    const file: File = event.target.files[0];
+    const maxSize: number = 43750;
+    console.log(file);
+
+    if (file.size > maxSize) {
+      alert('File size exceeds the allowed limit. Please choose a smaller image. Less than 350Kb');
+      event.target.value = '';
+      return
+    } else {
+
+
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        this.targetImg = reader.result as string;
+      };
+    }
     this.isLoading = false;
   }
   ngOnDestroy() {
@@ -138,7 +150,7 @@ export class AngularCropperComponent {
           this.croppedImage = base64data;
           this.base64.emit(file);
         };
-        reader.onerror = () => {};
+        reader.onerror = () => { };
         reader.readAsDataURL(file);
       });
     });

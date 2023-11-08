@@ -59,7 +59,7 @@ export class AuthService {
     }
     switch (errorResponse.error.error.message) {
       case 'EMAIL_EXISTS':
-        errorMessage = 'The email address is already in use!'
+        errorMessage = 'This email address is already in use!'
         break
       case 'OPERATION_NOT_ALLOWED':
         errorMessage = 'Password sign-in is disabled for this project!'
