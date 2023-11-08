@@ -1,4 +1,4 @@
-import { Component,OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from './auth/auth.service';
 
 @Component({
@@ -8,9 +8,10 @@ import { AuthService } from './auth/auth.service';
 })
 export class AppComponent implements OnInit {
   title = 'eCom';
-  constructor(private auth:AuthService){}
+  constructor(private auth: AuthService) { }
   ngOnInit(): void {
     this.auth.autoLogin()
+
   }
 
 }
