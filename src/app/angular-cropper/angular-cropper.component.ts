@@ -62,11 +62,11 @@ export class AngularCropperComponent {
     this.targetImg = '';
 
     const file: File = event.target.files[0];
-    const maxSize: number = 43750;
+    const maxSize: number = 18750;
     console.log(file);
 
     if (file.size > maxSize) {
-      alert('File size exceeds the allowed limit. Please choose a smaller image. Less than 350Kb');
+      alert('File size exceeds the allowed limit. Please choose a smaller image. Less than 150Kb. Please compress it.');
       event.target.value = '';
       return
     } else {
