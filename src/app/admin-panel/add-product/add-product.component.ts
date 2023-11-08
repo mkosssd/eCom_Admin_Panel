@@ -71,6 +71,8 @@ export class AddProductComponent implements OnInit {
   }
   angularCropperHandler(event: Event) {
     this.base64 = event;
+    console.log(event);
+    
   }
   formHandler() {
     this.isLoading = true;

@@ -62,7 +62,7 @@ export class AngularCropperComponent {
     this.targetImg = '';
 
     const file: File = event.target.files[0];
-    const maxSize: number = 18750;
+    const maxSize: number = 150000;
     console.log(file);
 
     if (file.size > maxSize) {
@@ -141,7 +141,7 @@ export class AngularCropperComponent {
 
     const promise = new Promise((resolve) => {
       canvas.toBlob((blob) => {
-        const file = new File([blob], 'png', {
+        const file = new File([blob],'webp', {
           type: blob.type,
         });
         const reader = new FileReader();
@@ -152,7 +152,7 @@ export class AngularCropperComponent {
         };
         reader.onerror = () => { };
         reader.readAsDataURL(file);
-      });
+      },'image/webp');
     });
 
     promise.then((res: any) => {
