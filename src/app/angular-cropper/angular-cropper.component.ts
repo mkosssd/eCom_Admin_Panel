@@ -109,6 +109,8 @@ export class AngularCropperComponent {
     if (this.settings) {
       const { width, height } = this.settings;
       aspectRatio = width / height;
+     
+      
     }
 
     this.cropperOptions = {
