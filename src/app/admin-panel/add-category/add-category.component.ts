@@ -27,7 +27,7 @@ export class AddCategoryComponent implements OnInit {
   }
   formHandler() {
     let categoryName: string = this.categoryForm.value['category'];
-    console.log(categoryName);
+    //console.log(categoryName);
 
     this.category.push(categoryName);
     this.data.setCategories({ ...this.category});

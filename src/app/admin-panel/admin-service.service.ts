@@ -15,11 +15,11 @@ export class AdminServiceService {
         id: this.firestore.createId(),
       })
       .then(() => {
-        console.log('Success');
+        //console.log('Success');
         this.router.navigate(['/']);
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
       });
   }
 }

@@ -19,7 +19,7 @@ export class DataService {
       .subscribe((querySnapshot) => {
         querySnapshot.forEach((doc) => {
           doc.ref.delete().then(() => {
-            console.log('deleted');
+            //console.log('deleted');
           });
         });
       });
@@ -38,7 +38,7 @@ export class DataService {
       .subscribe((querySnapshot) => {
         querySnapshot.forEach((doc) => {
           doc.ref.update(data).then(() => {
-            console.log('updated');
+            //console.log('updated');
             this.router.navigate(['admin']);
           });
         });

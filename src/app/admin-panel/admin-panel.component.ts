@@ -13,13 +13,13 @@ export class AdminPanelComponent {
     let formValue = form.form.value;
     let img: string[] = [];
     img.push(formValue.images);
-    console.log(img);
+    //console.log(img);
 
     let prodObj = {
       ...formValue,
       images: img,
     };
-    console.log(prodObj);
+    //console.log(prodObj);
 
     this.prodService.uploadProduct(prodObj);
   }

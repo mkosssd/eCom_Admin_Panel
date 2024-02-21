@@ -31,7 +31,7 @@ export class PageTitleComponent {
 
     );
     urlAfterRedirects$.pipe(withLatestFrom(routerData$)).subscribe((data) => {
-      console.log(data);
+      //console.log(data);
 
       let breadcrumb = data[1]['breadcrumb'];
       this.pageTitle = breadcrumb

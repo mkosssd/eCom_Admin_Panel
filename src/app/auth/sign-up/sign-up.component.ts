@@ -35,7 +35,7 @@ export class SignUpComponent {
   }
 
   onSubmit () {
-    console.log(this.authForm)
+    //console.log(this.authForm)
     this.auth.signup(this.authForm.value).subscribe(
       res => {},
       errorMessage => {
