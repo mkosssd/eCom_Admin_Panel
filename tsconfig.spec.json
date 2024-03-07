@@ -4,7 +4,8 @@
   "compilerOptions": {
     "outDir": "./spec",
     "types": [
-      "jasmine"
+      "jasmine",
+      "@angular/localize"
     ]
   },
   "include": [

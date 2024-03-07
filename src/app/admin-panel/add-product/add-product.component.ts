@@ -17,6 +17,7 @@ import { SuperImageCropper } from 'super-image-cropper';
 import { environment } from '../../../enviroments/enviroments';
 import { AdminServiceService } from '../admin-service.service';
 import { DataService } from '../data.service';
+import { ToastService } from 'src/app/components/toast/toast.service';
 export interface ImageCropperSetting {
   width: number;
   height: number;
@@ -36,7 +37,8 @@ export interface ImageCropperResult {
 export class AddProductComponent implements OnInit {
   constructor(
     private data: DataService,
-    private prodService: AdminServiceService
+    private prodService: AdminServiceService,
+    private _toastService: ToastService
   ) {}
 
   isLoading = false;
@@ -47,7 +49,7 @@ export class AddProductComponent implements OnInit {
 
   productForm: FormGroup;
   numRegex = /\d+$/;
-  base64;
+  base64:any;
   targetUrl = '';
 
   targetImg: string;
@@ -102,6 +104,10 @@ export class AddProductComponent implements OnInit {
       })
       .then(() => {
         this.isLoading = false;
-      });
+        this._toastService.show('Product Added Successfully!','bg-success')
+      })
+      .catch(()=>{
+        this._toastService.show('Failed To Add Product. Please Try Again Later!', 'bg-danger')
+      })
   }
 }

@@ -28,6 +28,8 @@ import { PageTitleComponent } from './page-title/page-title.component'
 import { SideBarComponent } from './side-bar/side-bar.component'
 import { NgxPaginationModule } from 'ngx-pagination'
 import { ErrorPageComponent } from './error-page/error-page.component'
+import { NgbdToastGlobal } from './components/toast/toast.component'
+import { ToastsContainer } from './components/toast-container'
 @NgModule({
   declarations: [
     AppComponent,
@@ -58,6 +60,8 @@ import { ErrorPageComponent } from './error-page/error-page.component'
     ImageCropperModule,
     BreadcrumbModule,
     HttpClientModule,
+    NgbdToastGlobal,
+    ToastsContainer,
 
     UploadWidgetModule,
     provideFirestore(() => getFirestore()),

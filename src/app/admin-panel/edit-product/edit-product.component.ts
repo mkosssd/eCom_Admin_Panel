@@ -17,6 +17,7 @@ import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage';
 import { environment } from 'src/enviroments/enviroments';
 import { SuperImageCropper } from 'super-image-cropper';
 import { DataService } from '../data.service';
+import { ToastService } from 'src/app/components/toast/toast.service';
 
 export interface ImageCropperSetting {
   width: number;
@@ -42,7 +43,7 @@ export class EditProductComponent implements OnInit {
   targetImg: any;
 
   productForm: FormGroup;
-  constructor(private actRoute: ActivatedRoute, private data: DataService) {}
+  constructor(private actRoute: ActivatedRoute, private data: DataService, private _toastService: ToastService) {}
 
   productId = '';
   product: any;
@@ -110,7 +111,11 @@ export class EditProductComponent implements OnInit {
         this.data.updateProduct(this.product[0]['id'], prodObj);
       }).then(()=>{
         this.isLoading=false
-      });
+        this._toastService.show('Product Edited Successfully!', 'bg-success mt-5 text-white fw-bolder')
+      }).
+      catch(()=>{
+        this._toastService.show('Product Cannot Be Edited. Please Try Again Later!', 'bg-danger text-white fw-bolder')
+      })
   }
   angularCropperHandler(event: Event) {
     this.base64 = event;
