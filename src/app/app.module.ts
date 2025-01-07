@@ -10,65 +10,65 @@ import { BrowserModule } from '@angular/platform-browser'
 import { UploadWidgetModule } from '@bytescale/upload-widget-angular'
 import { AngularCropperjsModule } from 'angular-cropperjs'
 import { ImageCropperModule } from 'ngx-image-cropper'
+import { NgxPaginationModule } from 'ngx-pagination'
 import { BreadcrumbModule } from 'xng-breadcrumb'
-import { environment } from '../enviroments/enviroments'
-import { AddCategoryComponent } from './admin-panel/add-category/add-category.component'
-import { AddProductComponent } from './admin-panel/add-product/add-product.component'
-import { AdminPanelComponent } from './admin-panel/admin-panel.component'
-import { EditProductComponent } from './admin-panel/edit-product/edit-product.component'
-import { ProductListComponent } from './admin-panel/product-list/product-list.component'
-import { AngularCropperComponent } from './angular-cropper/angular-cropper.component'
+import { environment } from '../environments/environment'
+import { AddProductComponent } from './modules/product/add-product/add-product.component'
+import { AdminPanelComponent } from './modules/admin-panel.component'
+import { EditProductComponent } from './modules/product/edit-product/edit-product.component'
+import { ProductListComponent } from './modules/product/product-list/product-list.component'
 import { AppRoutingModule } from './app-routing.module'
 import { AppComponent } from './app.component'
 import { LoginComponent } from './auth/login/login.component'
 import { SignUpComponent } from './auth/sign-up/sign-up.component'
-import { HeaderComponent } from './header/header.component'
-import { LoaderComponent } from './loader/loader.component'
-import { PageTitleComponent } from './page-title/page-title.component'
-import { SideBarComponent } from './side-bar/side-bar.component'
-import { NgxPaginationModule } from 'ngx-pagination'
-import { ErrorPageComponent } from './error-page/error-page.component'
+import { AngularCropperComponent } from './components/angular-cropper/angular-cropper.component'
+import { ErrorPageComponent } from './components/error-page/error-page.component'
+import { ToastsContainer } from './components/toast/toast-container'
 import { NgbdToastGlobal } from './components/toast/toast.component'
-import { ToastsContainer } from './components/toast-container'
+import { LoaderComponent } from './components/loader/loader.component'
+import { PageTitleComponent } from './components/page-title/page-title.component'
+import { SideBarComponent } from './components/side-bar/side-bar.component'
+import { HeaderComponent } from './components/header/header.component'
+import { AddCategoryComponent } from './modules/category/add-category/add-category.component'
 @NgModule({
-  declarations: [
-    AppComponent,
-    LoaderComponent,
-    AdminPanelComponent,
-    LoginComponent,
-    SignUpComponent,
-    AddProductComponent,
-    ProductListComponent,
-    AddCategoryComponent,
-    EditProductComponent,
-    HeaderComponent,
-    AngularCropperComponent,
-    SideBarComponent,
-    PageTitleComponent,
-    ErrorPageComponent
-  ],
-  imports: [
-    BrowserModule,
-    AngularFireStorageModule,
-    AppRoutingModule,
-    FormsModule,
-    NgxPaginationModule,
-    ImageCropperModule,
-    AngularCropperjsModule,
-    AngularFireModule,
-    ReactiveFormsModule,
-    ImageCropperModule,
-    BreadcrumbModule,
-    HttpClientModule,
-    NgbdToastGlobal,
-    ToastsContainer,
+    declarations: [
+        AppComponent,
+        LoaderComponent,
+        AdminPanelComponent,
+        LoginComponent,
+        SignUpComponent,
+        AddProductComponent,
+        ProductListComponent,
+        EditProductComponent,
+        AngularCropperComponent,
+        SideBarComponent,
+        PageTitleComponent,
+        ErrorPageComponent,
+        HeaderComponent,
+        AddCategoryComponent
+    ],
+    imports: [
+        BrowserModule,
+        AngularFireStorageModule,
+        AppRoutingModule,
+        FormsModule,
+        NgxPaginationModule,
+        ImageCropperModule,
+        AngularCropperjsModule,
+        AngularFireModule,
+        ReactiveFormsModule,
+        ImageCropperModule,
+        BreadcrumbModule,
+        HttpClientModule,
+        NgbdToastGlobal,
+        ToastsContainer,
 
-    UploadWidgetModule,
-    provideFirestore(() => getFirestore()),
-    AngularFireModule.initializeApp(environment.firebaseConfig),
-    provideFirebaseApp(() => initializeApp(environment.firebaseConfig))
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
+        UploadWidgetModule,
+        provideFirestore(() => getFirestore()),
+        AngularFireModule.initializeApp(environment.firebaseConfig),
+        provideFirebaseApp(() => initializeApp(environment.firebaseConfig))
+    ],
+    providers: [LoaderComponent],
+    bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }

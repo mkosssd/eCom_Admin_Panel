@@ -1,8 +1,8 @@
 import { Component, inject, OnDestroy, TemplateRef } from '@angular/core';
 import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 
-import { ToastService } from './toast.service';
-import { ToastsContainer } from '../toast-container';
+import { ToastService } from '../../services/toast.service';
+import { ToastsContainer } from './toast-container';
 
 @Component({
 	selector: 'ngbd-toast-global',
