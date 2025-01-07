@@ -1,0 +1,76 @@
+<div class="text-center mx-auto">
+    <app-loader *ngIf="!productsList"></app-loader>
+</div>
+<div *ngIf="productsList">
+    <div class="ms-1 bg-white shadow rounded">
+        <div class="p-4 d-flex justify-content-end align-items-center border-bottom">
+            <a class="btn btn-primary fw-medium btn-sm py-2 px-4" routerLink="/admin/add-product">Add Product</a>
+        </div>
+
+        <div class="table-responsive p-4 w-100">
+            <table class="table">
+                <thead>
+                    <tr class="small text-uppercase">
+                        <th class="text-secondary" colspan="2">Product</th>
+                        <th class="text-secondary">Price</th>
+                        <th class="text-secondary">Category</th>
+                        <th class="text-secondary">QTY</th>
+                        <th class="text-secondary">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let product of productsList | paginate: { itemsPerPage: 10, currentPage: page }; index as i " class="small text-uppercase align-middle">
+                        <td class="col-1">
+                            <img src="{{ product.images[0] }}" alt="{{ product.title }}" width="50px" height="50px" />
+                        </td>
+                        <td class="fw-semibold colTitle">
+                            {{
+                            product.title.length > 15
+                            ? (product.title | slice : 0 : 15) + "..."
+                            : product.title
+                            }}
+                        </td>
+                        <td class="text-secondary fw-semibold col-2">
+                            ${{ product.price }}
+                        </td>
+                        <td class="text-secondary fw-semibold col-2">
+                            {{ product.category }}
+                        </td>
+                        <td class="text-secondary fw-semibold col-1">
+                            {{ product.stock }}
+                        </td>
+                        <td class="text-secondary fw-semibold col-1">
+                            <a class="btn text-primary btn-sm" [routerLink]="'/admin/edit-product/'+product.id">
+                                <i class="bi bi-pen"></i>
+                            </a>
+                            <button class="btn text-danger btn-sm" (click)="deleteProduct(product.id, i, deleteModal)">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+
+            </table>
+            <div class="d-flex justify-content-end py-2">
+                <pagination-controls (pageChange)="page = $event"></pagination-controls>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<ng-template #deleteModal let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">Delete Product?</h4>
+        <button type="button" tabindex="-1" class="close pull-right btn-close" aria-label="Close" (click)="modal.dismiss()">
+        </button>
+    </div>
+    <div class="modal-body">
+        Are you sure you want to delete this product?
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-outline-success" (click)="modal.dismiss()">Cancel</button>
+        <button class="btn btn-outline-danger" (click)="modal.close()">Delete</button>
+    </div>
+
+</ng-template>

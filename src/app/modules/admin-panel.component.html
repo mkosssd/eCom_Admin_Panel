@@ -1,0 +1,19 @@
+<div class="mt-5">
+    <div class="row me-0">
+        <div class="col-xl-3 p-0 bg-black  sidebar" id="sidebars">
+            <div class="d-block d-xl-none p-0 m-0 " (click)="toggler()" id="overlay"></div>
+            <app-side-bar [callbackFunction]=toggler></app-side-bar>
+        </div>
+        <div class="col-xl-9" id="main">
+            <div class="p-4">
+                <div class="d-flex justify-content-between p-2">
+                    <app-page-title></app-page-title>
+                    <button (click)="toggler()" class="btn btn-outline-primary d-block d-xl-none">
+                        <i class="bi bi-list"></i>
+                    </button>
+                </div>
+                <router-outlet></router-outlet>
+            </div>
+        </div>
+    </div>
+</div>

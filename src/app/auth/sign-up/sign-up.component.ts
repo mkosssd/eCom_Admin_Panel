@@ -1,6 +1,6 @@
 import { Component, ElementRef, ViewChild } from '@angular/core'
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms'
-import { AuthService } from '../auth.service'
+import { AuthService } from '../../services/auth.service'
 declare const bootstrap: any
 @Component({
   selector: 'app-sign-up',

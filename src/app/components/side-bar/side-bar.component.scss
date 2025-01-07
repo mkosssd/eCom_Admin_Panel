@@ -1,0 +1,20 @@
+.sidebar {
+//   min-width: 250px !important;
+  height: 100vh !important;
+  @media screen and (max-width: 1200px) {
+        min-width: 300px;
+  }
+}
+
+.show {
+  margin-bottom: 60%;
+  background-color: transparent;
+  transition: all 500ms;
+}
+
+a:hover,
+a:focus {
+  background-color: #252525 !important;
+  border-radius: 10px;
+  padding: 0 auto;
+}
