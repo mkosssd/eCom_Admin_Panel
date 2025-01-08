@@ -10,6 +10,7 @@ import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage';
 import { ToastService } from 'src/app/services/toast.service';
 import { environment } from '../../../../environments/environment';
 import { DataService } from '../../../services/data.service';
+import { Category } from 'src/app/interface/category';
 
 export interface ImageCropperSetting {
     width: number;
@@ -39,7 +40,7 @@ export class AddProductComponent implements OnInit {
     isLoading = false;
 
     firebaseApp = initializeApp(environment.firebaseConfig);
-    categories = [];
+    categories: Category[] = [];
     storage = getStorage(this.firebaseApp);
 
     productForm: FormGroup;
@@ -63,10 +64,10 @@ export class AddProductComponent implements OnInit {
             ]),
         });
         this.data.getCategories().subscribe((res: any) => {
-            this.categories = Object.values(res);
+            this.categories = res
         });
     }
-    
+
     angularCropperHandler(event: Event) {
         this.base64 = event;
     }
@@ -95,14 +96,15 @@ export class AddProductComponent implements OnInit {
                     images: img,
                 };
 
-                this.data.uploadProduct(prodObj);
-            })
-            .then(() => {
-                this.isLoading = false;
-                this._toastService.show('Product Added Successfully!', 'bg-success')
-            })
-            .catch(() => {
-                this._toastService.show('Failed To Add Product. Please Try Again Later!', 'bg-danger')
+                this.data.uploadProduct(prodObj).subscribe({
+                    next: res => {
+                        this.isLoading = false;
+                        this._toastService.show('Product Added Successfully!', 'bg-success')
+                    },
+                    error: error => {
+                        this._toastService.show('Failed To Add Product. Please Try Again Later!', 'bg-danger')
+                    },
+                });
             })
     }
 }

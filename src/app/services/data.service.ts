@@ -33,7 +33,7 @@ export class DataService {
         return this.http.put(environment.API_EndPoint + 'products/' + pid, data)
     }
     uploadProduct(prodObj: {}) {
-        return this.http.post(environment.API_EndPoint, prodObj)
+        return this.http.post(environment.API_EndPoint+ 'products', prodObj)
     }
 
     getCategories() {
