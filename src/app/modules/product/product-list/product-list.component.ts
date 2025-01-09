@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit } from "@angular/core"; import { DataService } from '../../../services/data.service';
-import { Product } from 'src/app/services/cart-data.service';
+import { CartItem } from 'src/app/services/cart-data.service';
 import { Router } from '@angular/router';
 import { ToastService } from "src/app/services/toast.service";
 import { GeneralService } from "src/app/services/general.service";
@@ -14,7 +14,7 @@ import { log } from "console";
 export class ProductListComponent implements OnInit {
 
     page: number = 1;
-    productsList: Product[];
+    productsList: CartItem[];
 
     constructor(
         private data: DataService,
@@ -24,9 +24,9 @@ export class ProductListComponent implements OnInit {
         private modalService: NgbModal) { }
 
     ngOnInit(): void {
-        this.data.getProducts().subscribe((res: Product[]) => {
+        this.data.getProducts().subscribe((res: CartItem[]) => {
             this.productsList = res;
-            console.log(res);
+            console.log(res[0]._id);
             
         });
     }

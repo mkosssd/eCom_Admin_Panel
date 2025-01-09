@@ -4,20 +4,11 @@ import {
 	Output,
 } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
+import { Product } from "../interface/product";
 
-export interface Product {
-	id: string;
-	title: string;
-	description: string;
-	price: number;
-	images: string[];
+export interface CartItem extends Product {
 	amount: number;
 	isAdd?: boolean;
-	category:string
-	stock:number
-
-
-
 }
 @Injectable({
 	providedIn: "root",
@@ -26,14 +17,14 @@ export class CartDataService {
 	storedPro =
 		localStorage.getItem("cart") || "[]";
 	prods = JSON.parse(this.storedPro);
-	cartdata: Product[] = this.prods;
+	cartdata: CartItem[] = this.prods;
 	cart$ = new BehaviorSubject(this.cartdata);
 	@Output() items = new EventEmitter();
 	constructor() {}
 	
-	data(product: Product, method: string) {
+	data(product: CartItem, method: string) {
 		const productExistInCart = this.cartdata.find(
-			({ id }) => id === product.id
+			({ _id }) => _id === product._id
 		);
 
 		if (method === "add") {
@@ -47,7 +38,7 @@ export class CartDataService {
 			}
 		} else {
 			let index = this.cartdata.findIndex((p) => {
-				return p.id === product.id;
+				return p._id === product._id;
 			});
 			if (productExistInCart?.amount == 1) {
 				this.cartdata.splice(index, 1);

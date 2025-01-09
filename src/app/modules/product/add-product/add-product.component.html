@@ -21,8 +21,8 @@
                         <label for="category" class="form-label">Category<span class="text-danger small">*</span></label>
                         <select formControlName="category" id="category" class="form-select">
                             <option value="" disabled>Select a Category</option>
-                            <option *ngFor="let item of categories" [value]="item.category.toLocaleLowerCase()">
-                                {{ item.category| titlecase }}
+                            <option *ngFor="let item of categories" [value]="item.name">
+                                {{ item.name| titlecase }}
                             </option>
                         </select>
                         <span class="small text-danger" *ngIf="

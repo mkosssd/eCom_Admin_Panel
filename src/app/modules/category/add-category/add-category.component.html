@@ -22,9 +22,9 @@
             <tbody>
                 <tr *ngFor="let category of categories; index as i">
                     <td scope="row">{{ i + 1 }}</td>
-                    <td>{{ category.category }}</td>
+                    <td>{{ category.name }}</td>
                     <td>
-                        <button class="btn text-danger btn-sm" (click)="deleteCategory(category.id, i, deleteModal)">
+                        <button class="btn text-danger btn-sm" (click)="deleteCategory(category._id, i, deleteModal)">
                             <i class="bi bi-trash"></i>
                         </button>
                     </td>
