@@ -20,8 +20,8 @@
                     <div class="my-1">
                         <label for="category" class="form-label">Category<span class="text-danger small">*</span></label>
                         <select formControlName="category" id="category" class="form-select">
-                            <option *ngFor="let item of categoryList" [value]="item.category.toLocaleLowerCase()">
-                                {{ item.category| titlecase }}
+                            <option *ngFor="let item of categoryList" [value]="item.name.toLocaleLowerCase()">
+                                {{ item.name| titlecase }}
                             </option>
                         </select>
                         <span class="small text-danger" *ngIf="
@@ -52,7 +52,7 @@
                     <div class="row">
                         <div class="my-1">
                             <label for="price" class="form-label">Price<span class="text-danger small">*</span></label>
-                            <input type="text" formControlName="price" class="form-control" id="price" />
+                            <input type="number" formControlName="price" class="form-control" id="price" />
                             <span class="small text-danger" *ngIf="!productForm.get('price').valid && productForm.get('price').touched ">
                                 <span class="small text-danger" *ngIf="productForm.get('price').errors['pattern']">
                                     Price should only contain numbers.
@@ -65,7 +65,7 @@
 
                         <div class="my-1">
                             <label for="stock" class="form-label">Stock<span class="text-danger small">*</span></label>
-                            <input type="text" formControlName="stock" class="form-control" id="stock" />
+                            <input type="number" formControlName="stock" class="form-control" id="stock" />
                             <span class="small text-danger" *ngIf="!productForm.get('stock').valid && productForm.get('stock').touched ">
                                 <span class="small text-danger" *ngIf="productForm.get('stock').errors['pattern']">
                                     Stock should only contain numbers.
@@ -79,6 +79,6 @@
                 </div>
             </div>
         </div>
-        <button class="btn btn-success">EDIT </button>
+        <button class="btn btn-success" [disabled]="productForm.invalid">EDIT </button>
     </form>
 </div>

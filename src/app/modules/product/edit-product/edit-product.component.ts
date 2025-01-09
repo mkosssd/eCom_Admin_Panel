@@ -136,9 +136,9 @@ export class EditProductComponent implements OnInit {
         let prodObj = {
             ...formValue,
             images: img,
-            id: this.product.id,
+            _id: this.product._id,
         };
-        this.data.updateProduct(this.product['id'], prodObj).subscribe({
+        this.data.updateProduct(this.product['_id'], prodObj).subscribe({
             next: res => {
                 this.isLoading = false
                 this.genrealService.showLoader(false)

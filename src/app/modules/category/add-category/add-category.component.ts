@@ -42,7 +42,7 @@ export class AddCategoryComponent implements OnInit {
 
         let categoryName: string = this.categoryForm.value['category'];
         let category: Category = {
-            category: categoryName.toLocaleLowerCase(),
+            name: categoryName.toLocaleLowerCase(),
         }
         this.data.setCategories(category).subscribe({
             next: (res: Category) => {
