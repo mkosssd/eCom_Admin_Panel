@@ -18,9 +18,16 @@ export class HeaderComponent implements OnInit {
     constructor(private auth: AuthService, private router: Router) { }
 
     ngOnInit(): void {
-        this.auth.user.subscribe(user => {
-            this.isAuth = !!user;
-            this.userMail = user?.email;
+        this.auth.user.subscribe({
+            next: user => {
+                this.isAuth = !!user;
+                console.log(user);
+                
+                this.userMail = user?.storeName;
+            },
+            error: error => {
+                
+            }
         });
 
         this.router.events

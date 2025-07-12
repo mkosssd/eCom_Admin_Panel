@@ -9,6 +9,7 @@ export interface AuthResponseData {
     // token: string;
     token: string;
     email: string;
+    storeName: string
     // refreshToken: string;
     // expiresIn: string;
     // localId: string;
@@ -55,6 +56,7 @@ export class AuthService {
                         resData.userData.email,
                         resData.userData.localId,
                         resData.userData.token,
+                        resData?.userData?.storeName
                         // +resData.expiresIn
                     );
                 })
@@ -103,8 +105,9 @@ export class AuthService {
         email: string,
         userId: string,
         token: string,
+        storeName: string
     ) {
-        const userDetails = new IntUserData(email, userId, token);
+        const userDetails = new IntUserData(email, userId, token, storeName);
         this.user.next(userDetails);
         localStorage.setItem('loggedData', JSON.stringify(userDetails));
     }
@@ -127,6 +130,7 @@ export class AuthService {
                         resData.email,
                         resData.localId,
                         resData.token,
+                        resData.storeName
                         // +resData.expiresIn
                     );
                     this.user.next(resData.token);
@@ -160,6 +164,7 @@ export class AuthService {
             userId: string;
             _token: string;
             _tokenExpirationDate: string;
+            storeName: string
         } | null = loggedDataString ? JSON.parse(loggedDataString) : null;
 
         if (!loggedUserData) {
@@ -170,6 +175,7 @@ export class AuthService {
             loggedUserData.email,
             loggedUserData.userId,
             loggedUserData._token,
+            loggedUserData.storeName,
             // new Date(loggedUserData._tokenExpirationDate)
         );
 

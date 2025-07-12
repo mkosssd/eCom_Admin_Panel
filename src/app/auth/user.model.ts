@@ -3,6 +3,8 @@ export class IntUserData {
     public email: string,
     public id: string,
     private _token: string,
+    public storeName: string,
+    
     // private _tokenExpirationDate: Date
   ) { }
   get token() {
