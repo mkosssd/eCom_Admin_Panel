@@ -14,8 +14,12 @@
     <button (click)="exportCanvas()" type="button" class="btn btn-outline-primary btn-sm my-2" *ngIf="targetImg">
         Crop
     </button>
-    <br />
     <!-- <span class="small text-danger" *ngIf="targetImg && !croppedImage">
+        
         Please crop the image before uploading.</span> -->
-    <img [src]="croppedImage" alt="croppedImage" *ngIf="croppedImage" width="250px" />
+    <div class="row gap-2" *ngIf="croppedImage.length">
+        <div class="col-3 bg-black" *ngFor="let image of croppedImage">
+            <img [src]="image" alt="croppedImage"  class="img-fluid" />
+        </div>
+    </div>
 </div>

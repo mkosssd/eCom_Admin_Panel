@@ -6,7 +6,7 @@ import {
     UrlTree
 } from '@angular/router'
 import { Injectable } from '@angular/core'
-import { Observable, map, take } from 'rxjs'
+import { Observable, map, of, switchMap, take } from 'rxjs'
 import { AuthService } from '../services/auth.service';
 @Injectable({
     providedIn: 'root',
@@ -23,13 +23,27 @@ export class AuthGuard implements CanActivate {
         | Observable<boolean | UrlTree> {
         return this.authService.user.pipe(
             take(1),
-            map(user => {
-                const isAuth = !!user
+            switchMap(user => {
+                const isAuth = !!user;
+                console.log('isAuth', isAuth)
                 if (isAuth) {
-                    return true
+                 return   this.authService.checkAuthToken().pipe(
+                        map((res: any) => {
+                            if (res.validUser) {
+                                console.log('first')
+                                return true;
+                            } else {
+                                this.authService.logout();
+                                return this.router.createUrlTree(['/login']);
+                            }
+                        })
+                    );
+                } else {
+                    this.authService.logout();
+                    return of(this.router.createUrlTree(['/login']));
                 }
-                return this.router.createUrlTree(['/login'])
             })
         )
     }
+    
 }

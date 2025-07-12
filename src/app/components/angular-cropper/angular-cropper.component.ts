@@ -8,6 +8,7 @@ import {
 } from '@angular/core';
 import { CropperComponent } from 'angular-cropperjs';
 import Cropper from 'cropperjs';
+import { GeneralService } from 'src/app/services/general.service';
 import { SuperImageCropper } from 'super-image-cropper';
 export interface ImageCropperSetting {
     width: number;
@@ -37,13 +38,15 @@ export class AngularCropperComponent {
     @Output() export = new EventEmitter<ImageCropperResult>();
     @Output() ready = new EventEmitter();
 
+    constructor(private loaderService: GeneralService){}
+
     public isLoading: boolean = true;
     public cropper: Cropper;
     public imageElement: HTMLImageElement;
     public loadError: any;
 
     imageChangedEvent: any = '';
-    croppedImage: any = '';
+    croppedImage: any[]= [];
 
     file: any;
     @Output() base64 = new EventEmitter();
@@ -57,8 +60,9 @@ export class AngularCropperComponent {
     ngOnChanges(): void {
         if (this.imageUrl) this.targetImg = this.imageUrl;
     }
+
     onImageUpload(event: any): void {
-        this.croppedImage = '';
+        // this.croppedImage = [];
         this.targetImg = '';
 
         const file: File = event.target.files[0];
@@ -134,6 +138,7 @@ export class AngularCropperComponent {
     }
 
     exportCanvas(base64?: any) {
+        this.loaderService.showLoader(true)
         const imageData = this.cropper.getImageData();
         const cropData = this.cropper.getCropBoxData();
         const canvas = this.cropper.getCroppedCanvas();
@@ -147,10 +152,14 @@ export class AngularCropperComponent {
                 const reader = new FileReader();
                 reader.onload = (e) => {
                     const base64data = reader.result;
-                    this.croppedImage = base64data;
+                    this.croppedImage.push(base64data);
                     this.base64.emit(file);
+                    this.loaderService.showLoader(false)
+
                 };
-                reader.onerror = () => { };
+                reader.onerror = () => { 
+                    this.loaderService.showLoader(false)
+                };
                 reader.readAsDataURL(file);
             }, 'image/webp');
         });

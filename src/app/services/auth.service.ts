@@ -1,17 +1,18 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { BehaviorSubject, catchError, tap, throwError } from 'rxjs';
+import { BehaviorSubject, catchError, Observable, of, tap, throwError } from 'rxjs';
 import { Router } from '@angular/router';
 import { IntUserData } from '../auth/user.model';
 export interface AuthResponseData {
-    kind: string;
-    idToken: string;
+    // kind: string;
+    // token: string;
+    token: string;
     email: string;
-    refreshToken: string;
-    expiresIn: string;
-    localId: string;
-    registered?: boolean;
+    // refreshToken: string;
+    // expiresIn: string;
+    // localId: string;
+    // registered?: boolean;
 }
 @Injectable({
     providedIn: 'root',
@@ -34,25 +35,28 @@ export class AuthService {
     signup(form: any) {
         const email = form.email;
         const password = form.inputPassword;
+        console.log(form);
+
         return this.http
             .post<AuthResponseData>(
-                'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=' + environment.ADMIN_AUTH_API_KEY,
+                environment.API_EndPoint + 'auth/signUp',
                 {
+                    ...form,
                     email,
                     password,
-                    returnSecureToken: true,
                 }
             )
             .pipe(
                 catchError(this.handleError),
                 tap((resData: any) => {
+                    console.log(resData);
+
                     this.handleAuth(
-                        resData.email,
-                        resData.localId,
-                        resData.idToken,
-                        +resData.expiresIn
+                        resData.userData.email,
+                        resData.userData.localId,
+                        resData.userData.token,
+                        // +resData.expiresIn
                     );
-                    this.router.navigate(['/login'])
                 })
             );
     }
@@ -60,6 +64,8 @@ export class AuthService {
     private handleError(errorResponse: HttpErrorResponse) {
 
         let errorMessage = 'An unknown error occured!'
+        console.log(errorResponse);
+
         if (!errorResponse.error || !errorResponse.error.error) {
             return throwError(errorMessage)
         }
@@ -97,35 +103,33 @@ export class AuthService {
         email: string,
         userId: string,
         token: string,
-        expiresIn: number
     ) {
-        const expiresInDate = new Date(new Date().getTime() + expiresIn * 1000);
-        const userDetails = new IntUserData(email, userId, token, expiresInDate);
+        const userDetails = new IntUserData(email, userId, token);
         this.user.next(userDetails);
-        // this.autoLogout(expiresIn * 1000);
         localStorage.setItem('loggedData', JSON.stringify(userDetails));
     }
 
     login(email: string, password: string) {
         return this.http
             .post<AuthResponseData>(
-                'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=' + environment.ADMIN_AUTH_API_KEY,
+                environment.API_EndPoint + 'auth/login',
                 {
                     email,
                     password,
-                    returnSecureToken: true,
                 }
             )
             .pipe(
                 catchError(this.handleError),
                 tap((resData: any) => {
+                    console.log(resData);
+
                     this.handleAuth(
                         resData.email,
                         resData.localId,
-                        resData.idToken,
-                        +resData.expiresIn
+                        resData.token,
+                        // +resData.expiresIn
                     );
-                    this.user.next(resData.idToken);
+                    this.user.next(resData.token);
                     this.router.navigate(['/admin']);
                 })
             );
@@ -166,7 +170,7 @@ export class AuthService {
             loggedUserData.email,
             loggedUserData.userId,
             loggedUserData._token,
-            new Date(loggedUserData._tokenExpirationDate)
+            // new Date(loggedUserData._tokenExpirationDate)
         );
 
         if (loadedUser.token) {
@@ -183,4 +187,20 @@ export class AuthService {
             this.logout();
         }, expireDuration);
     }
+
+    checkAuthToken(): Observable<{ validUser: boolean }> {
+        return this.http.get<{ validUser: boolean }>(
+            environment.API_EndPoint + 'auth/checkAuth'
+        ).pipe(
+            catchError(this.handleAuthError)
+        );
+    }
+
+    private handleAuthError = (error: any): Observable<{ validUser: boolean }> => {
+        console.error('checkAuthToken error:', error);
+        return of({ validUser: false });
+    }
+
+
+
 }

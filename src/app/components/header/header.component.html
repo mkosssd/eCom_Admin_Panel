@@ -1,35 +1,32 @@
 <nav class="navbar fixed-top bg-black z-1 py-3">
-	<div class="w-100 px-4">
-		<a class="navbar-brand" routerLink="/">
-			<img src="\assets\logo.svg" alt="Anywhere-logo" />
-			<span class="h5 fw-bold text-white"> Anywhere App </span>
-		</a>
-		<ul class="nav navbar-nav float-end d-flex flex-row">
-			<div class="dropdown dropstart">
-				<button class="btn p-0 m-0" type="button" aria-expanded="false" *ngIf="isAuth">
-					<img src="https://preview.keenthemes.com/metronic8/demo1/assets/media/avatars/300-3.jpg" alt=""
-						width="40px" class="rounded" />
-				</button>
-				<li class="nav-item " *ngIf="!isAuth">
-					<button class=" btn btn-outline-light " routerLink="/login">Login</button>
-				</li>
-				<ul class="dropdown-menu position-absolute bg-transparent  border-0" *ngIf="isAuth">
-					<div class="bg-white border rounded   small">
-						<li class="dropdown-item p-3 border-bottom">
-							<img width="50px" class="rounded"
-								src="https://preview.keenthemes.com/metronic8/demo1/assets/media/avatars/300-3.jpg"
-								alt="userImage" />
-							<span class="fw-bold text-decoration-none text-black mx-2"> {{userMail | uppercase}}</span>
-						</li>
+    <div class="w-100 px-4">
+        <a class="navbar-brand" routerLink="/">
+            <img src="\assets\logo.svg" alt="Anywhere-logo" />
+            <span class="h5 fw-bold text-white"> Anywhere App </span>
+        </a>
+        <ul class="nav navbar-nav float-end d-flex flex-row">
+            <div class="dropdown dropstart">
+                <button class="btn p-0 m-0" type="button" aria-expanded="false" *ngIf="isAuth">
+                    <img src="https://preview.keenthemes.com/metronic8/demo1/assets/media/avatars/300-3.jpg" alt="" width="40px" class="rounded" />
+                </button>
+                <li class="nav-item " *ngIf="!isAuth">
+                    <button class=" btn btn-outline-light " [routerLink]="isSignUp ? '/login' : '/signup'">{{isSignUp ? 'Login' : 'Sign Up'}}</button>
+                </li>
+                <ul class="dropdown-menu position-absolute bg-transparent  border-0" *ngIf="isAuth">
+                    <div class="bg-white border rounded   small">
+                        <li class="dropdown-item p-3 border-bottom">
+                            <img width="50px" class="rounded" src="https://preview.keenthemes.com/metronic8/demo1/assets/media/avatars/300-3.jpg" alt="userImage" />
+                            <span class="fw-bold text-decoration-none text-black mx-2"> {{userMail | uppercase}}</span>
+                        </li>
 
-						<li>
-							<button class="dropdown-item text-center py-2" (click)="logout()">Logout</button>
-						</li>
+                        <li>
+                            <button class="dropdown-item text-center py-2" (click)="logout()">Logout</button>
+                        </li>
 
-					</div>
-				</ul>
+                    </div>
+                </ul>
 
-			</div>
-		</ul>
-	</div>
+            </div>
+        </ul>
+    </div>
 </nav>

@@ -43,10 +43,12 @@ export class AddCategoryComponent implements OnInit {
         let categoryName: string = this.categoryForm.value['category'];
         let category: Category = {
             name: categoryName.toLocaleLowerCase(),
+            description: ''
         }
         this.data.setCategories(category).subscribe({
-            next: (res: Category) => {
-                this.categories.push(res)
+            next: (res: any) => {
+                
+                this.categories.push(res.category)
                 this.generalService.showLoader(false)
                 this.toastService.show('Category Added Successfully!.', 'bg-success text-white fw-bolder')
             },

@@ -18,33 +18,33 @@ export class DataService {
         private http: HttpClient) { }
 
     getProducts() {
-        return this.http.get(environment.API_EndPoint + 'products')
+        return this.http.get(environment.API_EndPoint + 'admin/products')
     }
 
     deleteProduct(id: string) {
-        return this.http.delete(environment.API_EndPoint + 'products/' + id)
+        return this.http.delete(environment.API_EndPoint + 'admin/products/' + id)
     }
 
     getProductById(pid: string) {
-        return this.http.get(environment.API_EndPoint + 'products/' + pid)
+        return this.http.get(environment.API_EndPoint + 'admin/products/' + pid)
     }
 
     updateProduct(pid: string, data: Product) {
-        return this.http.put(environment.API_EndPoint + 'products/' + pid, data)
+        return this.http.put(environment.API_EndPoint + 'admin/products/' + pid, data)
     }
     uploadProduct(prodObj: {}) {
-        return this.http.post(environment.API_EndPoint+ 'products', prodObj)
+        return this.http.post(environment.API_EndPoint+ 'admin/products', prodObj)
     }
 
     getCategories() {
-        return this.http.get(environment.API_EndPoint + 'categories')
+        return this.http.get(environment.API_EndPoint + 'admin/categories')
     }
 
     setCategories(categoryData: Category) {
-        return this.http.post(environment.API_EndPoint + 'categories', categoryData)
+        return this.http.post(environment.API_EndPoint + 'admin/categories', categoryData)
     }
 
     deleteCategory(id: string) {
-        return this.http.delete(environment.API_EndPoint + 'categories/' + id)
+        return this.http.delete(environment.API_EndPoint + 'admin/categories/' + id)
     }
 }

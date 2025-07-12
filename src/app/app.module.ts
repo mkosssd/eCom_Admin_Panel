@@ -1,4 +1,4 @@
-import { HttpClientModule } from '@angular/common/http'
+import { HTTP_INTERCEPTORS, HttpClientModule, withInterceptors } from '@angular/common/http'
 
 import { NgModule } from '@angular/core'
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app'
@@ -30,6 +30,7 @@ import { PageTitleComponent } from './components/page-title/page-title.component
 import { SideBarComponent } from './components/side-bar/side-bar.component'
 import { HeaderComponent } from './components/header/header.component'
 import { AddCategoryComponent } from './modules/category/add-category/add-category.component'
+import { HeaderInterceptor } from './interceptor/interceptor'
 @NgModule({
     declarations: [
         AppComponent,
@@ -66,9 +67,10 @@ import { AddCategoryComponent } from './modules/category/add-category/add-catego
         UploadWidgetModule,
         provideFirestore(() => getFirestore()),
         AngularFireModule.initializeApp(environment.firebaseConfig),
-        provideFirebaseApp(() => initializeApp(environment.firebaseConfig))
+        provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
     ],
-    providers: [LoaderComponent],
+    providers: [LoaderComponent, { provide: HTTP_INTERCEPTORS, useClass: HeaderInterceptor, multi: true },
+    ],
     bootstrap: [AppComponent]
 })
 export class AppModule { }
