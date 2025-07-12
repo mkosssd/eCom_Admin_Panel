@@ -4,6 +4,7 @@
 
 * {
   font-family: "Inter", sans-serif;
+  
 }
 
 
@@ -20,4 +21,26 @@ body {
 
 input.ng-invalid.ng-touched {
   border: 1px solid red;
+}
+p {
+    margin-bottom: 0.2rem !important;
+}
+.fs-13 {
+    font-size: 13px;
+}
+
+.skeleton-line, .skeleton-img, .skeleton-btn, .skeleton-icon {
+    background: linear-gradient(90deg, #e0e0e0 25%, #f0f0f0 50%, #e0e0e0 75%);
+    background-size: 200% 100%;
+    animation: skeleton-loading 1.5s infinite;
+    border-radius: 4px;
+}
+
+@keyframes skeleton-loading {
+    0% {
+        background-position: 200% 0;
+    }
+    100% {
+        background-position: -200% 0;
+    }
 }

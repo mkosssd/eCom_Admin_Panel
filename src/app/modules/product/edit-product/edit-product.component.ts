@@ -60,18 +60,28 @@ export class EditProductComponent implements OnInit {
         private genrealService: GeneralService,
         private router: Router) {
 
-        this.productForm = new FormGroup({
-            title: new FormControl('', Validators.required),
-            category: new FormControl('', Validators.required),
-            price: new FormControl(null, [
-                Validators.required,
-                Validators.pattern(this.numRegex),
-            ]),
-            stock: new FormControl(null, [
-                Validators.required,
-                Validators.pattern(this.numRegex),
-            ]),
-        });
+            this.productForm = new FormGroup({
+                title: new FormControl('', Validators.required),
+                category: new FormControl('', Validators.required),
+                warrantyInformation: new FormControl('', Validators.required),
+                shippingInformation: new FormControl('', Validators.required),
+                returnPolicy: new FormControl('', Validators.required),
+                price: new FormControl(null, [
+                    Validators.required,
+                    Validators.pattern(this.numRegex),
+                ]),
+                discountPercentage: new FormControl(null, [
+                    Validators.required,
+                    Validators.pattern(this.numRegex),
+                    Validators.max(100),
+                ]),
+                stock: new FormControl(null, [
+                    Validators.required,
+                    Validators.pattern(this.numRegex),
+                ]),
+                description: new FormControl('', Validators.required),
+                image: new FormControl('', Validators.required),
+            });
     }
 
     ngOnInit(): void {
@@ -79,6 +89,8 @@ export class EditProductComponent implements OnInit {
             this.isLoading = true
             this.data.getProductById(params['id']).subscribe({
                 next: (res: Product) => {
+                    console.log(res);
+                    
                     // this.targetImg = res.images[0];
                     this.product = res;
 
@@ -88,6 +100,7 @@ export class EditProductComponent implements OnInit {
                     });
 
                     this.productForm.patchValue({
+                        ...res,
                         title: res.title,
                         category: res.category,
                         price: +res.price,

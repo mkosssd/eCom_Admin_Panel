@@ -3,7 +3,19 @@
         <app-loader></app-loader>
     </div>
 </div>
-<div class=" bg-white shadow rounded p-3" *ngIf="!isLoading">
+
+<div *ngIf="!categories?.length && !isLoading" class="py-5 align-items-center justify-content-center h-100 d-flex">
+    <div class="justify-content-center py-md-5 flex-column gap-3 align-items-center w-100 d-flex h-100 ">
+        <!-- <p class="text-bg-danger">NO PROd</p> -->
+        <!-- <img src="/assets/abandoned-cart.png" width="150" class="img-fluid" /> -->
+        <div class="text-center">
+            <p class="text-uppercase fw-bold">You haven't added any category yet!</p>
+            <p class="text-uppercase fw-medium fs-13 mt-3 ">Add one?</p>
+            <button class="btn btn-primary fw-medium btn-sm py-1 px-3 mt-1" data-bs-toggle="modal" data-bs-target="#addCategory"><i class="bi bi-plus"></i> Add Category</button>
+        </div>
+    </div>
+</div>
+<div class=" bg-white shadow rounded p-3" *ngIf="categories.length">
 
     <div class="p-4 d-flex justify-content-end align-items-center border-bottom">
         <button type="button" class="btn btn-primary btn-sm py-2 px-4" data-bs-toggle="modal" data-bs-target="#addCategory">

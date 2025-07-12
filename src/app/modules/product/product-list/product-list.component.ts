@@ -1,10 +1,10 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit } from "@angular/core"; import { DataService } from '../../../services/data.service';
-import { CartItem } from 'src/app/services/cart-data.service';
 import { Router } from '@angular/router';
 import { ToastService } from "src/app/services/toast.service";
 import { GeneralService } from "src/app/services/general.service";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { log } from "console";
+import { CartItem, ProductList } from "src/app/interface/category";
 
 @Component({
     selector: 'app-product-list',
@@ -14,25 +14,31 @@ import { log } from "console";
 export class ProductListComponent implements OnInit {
 
     page: number = 1;
-    productsList: CartItem[];
-
+    productsList: CartItem[] = [];
+    isLoading = true
     constructor(
         private data: DataService,
         private router: Router,
         private toastService: ToastService,
-        private generalService: GeneralService,
-        private modalService: NgbModal) { }
+        private modalService: NgbModal,
+        private generalService: GeneralService) { }
 
     ngOnInit(): void {
-        this.data.getProducts().subscribe((res: CartItem[]) => {
-            this.productsList = res;
-            console.log(res[0]._id);
-            
+        this.isLoading = true
+
+        this.data.getProducts().subscribe({
+            next: (res: ProductList) => {
+                this.productsList = res?.products;
+                this.isLoading = false
+            }, error: (error: any) => {
+                this.isLoading = false
+            }
         });
     }
 
+
     deleteProduct(pid: string, i: number, modal: any) {
-        this.modalService.open(modal).result.then((result)=>{
+        this.modalService.open(modal).result.then((result) => {
 
             this.productsList.splice(i, 1);
             this.generalService.showLoader(true)
@@ -44,9 +50,9 @@ export class ProductListComponent implements OnInit {
                 error: error => {
                     this.generalService.showLoader(false)
                     this.toastService.show('Product cannot be deleted. Try again later!', 'bg-danger text-white fw-bolder')
-                    
+
                 }
             });
-        }, (reason)=>{ })
+        }, (reason) => { })
     }
 }

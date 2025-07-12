@@ -18,5 +18,5 @@ export const environment = {
         appId:
             "1:24709365004:web:84a49a9af3b72dc0eedd29",
     },
-    API_EndPoint: "https://anywhere-ecom-backend.onrender.com/"
+    API_EndPoint: "http://localhost:3000/"
 };

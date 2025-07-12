@@ -45,7 +45,7 @@ export class AddProductComponent implements OnInit {
 
     productForm: FormGroup;
     numRegex = /\d+$/;
-    base64: any;
+    base64: any[] = [];
     targetUrl = '';
 
     targetImg: string;
@@ -54,22 +54,38 @@ export class AddProductComponent implements OnInit {
         this.productForm = new FormGroup({
             title: new FormControl('', Validators.required),
             category: new FormControl('', Validators.required),
+            warrantyInformation: new FormControl('', Validators.required),
+            shippingInformation: new FormControl('', Validators.required),
+            returnPolicy: new FormControl('', Validators.required),
             price: new FormControl(null, [
                 Validators.required,
                 Validators.pattern(this.numRegex),
+            ]),
+            discountPercentage: new FormControl(null, [
+                Validators.required,
+                Validators.pattern(this.numRegex),
+                Validators.max(100),
             ]),
             stock: new FormControl(null, [
                 Validators.required,
                 Validators.pattern(this.numRegex),
             ]),
+            description: new FormControl('', Validators.required),
+            image: new FormControl([], Validators.required),
         });
-        this.data.getCategories().subscribe((res: any) => {
-            this.categories = res
+        this.data.getCategories().subscribe({
+            next: (res: any) => {
+                this.categories = res
+                console.log('res', res)
+            },
+            error: (error: Error) => {
+                console.log(error)
+            }
         });
     }
 
     angularCropperHandler(event: Event) {
-        this.base64 = event;
+        this.base64.push(event);
     }
 
     formHandler() {
@@ -80,17 +96,18 @@ export class AddProductComponent implements OnInit {
             stock: +this.productForm.value['stock'],
         };
         let img: string[] = [];
+console.log('formValue', formValue)
+        const uploadImages = this.base64.map((base) => {
+            const refStorage = ref(this.storage, `images/${formValue.title}+${Date.now()}`);
+            return uploadBytes(refStorage, base)
+                .then((snapshot) => getDownloadURL(snapshot.ref));
+        });
 
-        const refStorage = ref(this.storage, `images/${formValue.title}`);
+        Promise.all(uploadImages)
+            .then((downloadURLs) => {
+                img = downloadURLs;
+                console.log(downloadURLs);
 
-        uploadBytes(refStorage, this.base64)
-            .then((snapshot) => {
-                return getDownloadURL(snapshot.ref);
-            })
-            .then((downloadURL) => {
-                img.push(downloadURL);
-            })
-            .then(() => {
                 let prodObj = {
                     ...formValue,
                     images: img,
@@ -99,12 +116,13 @@ export class AddProductComponent implements OnInit {
                 this.data.uploadProduct(prodObj).subscribe({
                     next: res => {
                         this.isLoading = false;
-                        this._toastService.show('Product Added Successfully!', 'bg-success')
+                        this._toastService.show('Product Added Successfully!', 'bg-success');
                     },
                     error: error => {
-                        this._toastService.show('Failed To Add Product. Please Try Again Later!', 'bg-danger')
+                        this.isLoading = false;
+                        this._toastService.show('Failed To Add Product. Please Try Again Later!', 'bg-danger');
                     },
                 });
-            })
+            });
     }
 }
